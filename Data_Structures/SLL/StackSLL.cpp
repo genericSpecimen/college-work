@@ -21,6 +21,13 @@ public:
 	Stack() {
 		head = tail = nullptr;
 	}
+	~Stack() {
+		for(Node* temp; !this->isEmpty();) {
+			temp = head->next;
+			delete head;
+			head = temp;
+		}
+	}
 	bool isEmpty() {
 		return head==nullptr;
 	}
@@ -83,5 +90,7 @@ int main() {
 	s.push(400);
 	s.printStack();
 	std::cout << "Popped: " << s.pop() << std::endl;
+	s.printStack();
+	s.~Stack();
 	s.printStack();
 }
