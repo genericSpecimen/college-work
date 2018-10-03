@@ -43,13 +43,13 @@ int main() {
 	int size = 10;
 	int op;
 	std::cout << "How do you want to search?";
-	std::cout << "\n1. Binary Search";
-	std::cout << "\n2. Linear Search";
+	std::cout << "\n1. Linear Search";
+	std::cout << "\n2. Binary Search";
 	std::cout << "\nEnter your option (1-2): ";
 	std::cin >> op;
 	switch(op) {
 		case 1: std::cout << "Element found at index: " << linear_search(a,10,69) << std::endl; break;
-		case 2: insertion_sort(a,size); std::cout << "Element found at index: " << linear_search(a,10,69) << std::endl; break;
+		case 2: insertion_sort(a,size); std::cout << "Element found at index: " << binary_search(a,0,9,69) << std::endl; break;
 		default: std::cout << "Invalid option!\n";
 	}
 }
