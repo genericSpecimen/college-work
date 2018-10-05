@@ -13,7 +13,7 @@ public:
 		if(i<j) set(j,i,elem);
 		else if(i>=j) elements[i*(i+1)/2+j] = elem;
 	}
-	int get(int i, int j) const {
+	T get(int i, int j) const {
 		if(i<0 || j<0 || i>=m_size || j>=m_size)
             throw std::out_of_range("matrix indices out of range");
 		if(i<j) return get(j,i);
