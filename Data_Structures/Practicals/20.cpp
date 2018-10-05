@@ -1,41 +1,41 @@
 #include<iostream>
-
+template <class T, int m_size, int num_elements>
 class UpperTriangularMatrix {
-private:
-	int* elements;
 public:
-	int size;
-	UpperTriangularMatrix(int size) {
-		this->size = size;
-		elements = new int[size*(size+1)/2];
+    T elements[num_elements];
+	UpperTriangularMatrix() {
+        for(int i=0;i<num_elements;i++) elements[i] = 0;
 	}
 
-	void set_element(int i, int j, const int& elem) {
-		if(i<0 || j<0 || i>=size || j>=size) return;
-		if(i<=j) elements[size*i - i*(i-1)/2 + j-i] = elem;
+	void set(int i, int j, T elem) {
+		if(i<0 || j<0 || i >= m_size || j >= m_size)
+            throw std::out_of_range("matrix indices out of range");
+		if(i <= j) elements[m_size*i - i*(i-1)/2 + j-i] = elem;
 	}
 
-	int get_element(int i, int j) {
-		if(i<0 || j<0 || i>=size || j>=size) return 0;
-		if(i<=j) return elements[size*i - i*(i-1)/2 + j-i];
-		return 0;
+	T get(int i, int j) const {
+		if(i<0 || j<0 || i >= m_size || j >= m_size)
+            throw std::out_of_range("matrix indices out of range");
+		if(i <= j) return elements[m_size*i - i*(i-1)/2 + j-i];
+		return 0; //all other elements are 0
 	}
-	~UpperTriangularMatrix() { delete[] elements; }
 };
 
 int main() {
-	UpperTriangularMatrix utm(3);
-	utm.set_element(0,0,1);
-	utm.set_element(1,1,2);
-	utm.set_element(2,2,3);
+    const int m_size = 3;
+    const int num_elements = m_size*(m_size + 1)/2;
+	UpperTriangularMatrix<int, m_size, num_elements> utm;
+	utm.set(0,0,1);
+	utm.set(1,1,2);
+	utm.set(2,2,3);
 	
-	utm.set_element(0,1,4);
-	utm.set_element(1,2,5);
-	utm.set_element(0,2,6);
+	utm.set(0,1,4);
+	utm.set(1,2,5);
+	utm.set(0,2,6);
 
-	for(int i=0;i<utm.size;i++) {
-		for(int j=0;j<utm.size;j++)
-			std::cout << utm.get_element(i,j) << " ";
-		std::cout << std::endl;
-	}
+    for(int i=0;i<m_size;i++) {
+        for(int j=0;j<m_size;j++)
+            std::cout << utm.get(i,j) << "\t";
+        std::cout << std::endl;
+    }
 }

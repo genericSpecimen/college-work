@@ -1,36 +1,31 @@
-#include<iostream>
+#include <iostream>
+template <class T, int size>
 class DiagonalMatrix {
-private:
-	int size;
-	int* elements;
 public:
-	DiagonalMatrix(int size) {
-		this->size = size;
-		elements = new int[size];
-		for(int i=0;i<size;i++) elements[i] = 0;
-	}
-	int get_element(int i, int j) const {
-		if(i<0 || j<0 || i>=size || j>=size) return 0;
-		else if(i == j) return elements[i];
-		return 0;
-	}
-	void set_element(int i, int j, const int& elem) {
-		if(i<0 || j<0 || i>=size || j>=size) return;
-		else if(i==j) elements[i] = elem;
-		else if(elem != 0) std::cout << "Non-diagonal elements must be zero.\n";
-	} 
-	~DiagonalMatrix() { delete[] elements; }
+    T elements[size]; //1D array to store the non-zero elements
+    DiagonalMatrix() {
+        for(int i=0;i<size;i++) elements[i] = 0;
+    }
+    void set(int i, int j, T elem) {
+        if(i<0 || j<0 || i>=size || j>=size)
+            throw std::out_of_range("matrix indices out of range");
+        else if(i == j) elements[i] = elem;
+    }
+    T get(int i, int j) const {
+        if(i<0 || j<0 || i>=size || j>= size)
+            throw std::out_of_range("matrix indices out of range");
+        else if(i == j) return elements[i];
+        else return 0; //all other elements are 0
+    }
 };
 
 int main() {
-	DiagonalMatrix dm(3);
-	dm.set_element(0,0,1);
-	dm.set_element(1,1,2);
-	dm.set_element(2,2,3);
-
-	for(int i=0;i<3;i++) {
-		for(int j=0;j<3;j++)
-		std::cout << dm.get_element(i,j) << " ";
-		std::cout << std::endl;
-	}
+    const int size = 3;
+    DiagonalMatrix<int,size> dm;
+    dm.set(0,0,5); dm.set(1,1,6); dm.set(2,2,7);
+    for(int i=0;i<size;i++) {
+        for(int j=0;j<size;j++)
+            std::cout << dm.get(i,j) << "\t";
+        std::cout << std::endl;
+    }
 }

@@ -1,41 +1,41 @@
 #include<iostream>
-
+template <class T, int m_size, int num_elements>
 class LowerTriangularMatrix {
-private:
-	int* elements;
 public:
-	int size;
-	LowerTriangularMatrix(int size) {
-		this->size = size;
-		elements = new int[size*(size+1)/2];
+    T elements[num_elements];
+	LowerTriangularMatrix() {
+        for(int i=0;i<num_elements;i++) elements[i] = 0;
 	}
 
-	void set_element(int i, int j, const int& elem) {
-		if(i<0 || j<0 || i>=size || j>=size) return;
-		if(i>=j) elements[i*(i+1)/2 + j] = elem;
+	void set(int i, int j, T elem) {
+		if(i<0 || j<0 || i >= m_size || j >= m_size)
+            throw std::out_of_range("matrix indices out of range");
+		if(i >= j) elements[i*(i+1)/2 + j] = elem;
 	}
 
-	int get_element(int i, int j) {
-		if(i<0 || j<0 || i>=size || j>=size) return 0;
-		if(i>=j) return elements[i*(i+1)/2 + j];
-		return 0;
+	T get(int i, int j) const {
+		if(i<0 || j<0 || i >= m_size || j >= m_size)
+            throw std::out_of_range("matrix indices out of range");
+		if(i >= j) return elements[i*(i+1)/2 + j];
+		return 0; //all other elements are 0
 	}
-	~LowerTriangularMatrix() { delete[] elements; }
 };
 
 int main() {
-	LowerTriangularMatrix ltm(3);
-	ltm.set_element(0,0,1);
-	ltm.set_element(1,1,2);
-	ltm.set_element(2,2,3);
+    const int m_size = 3; //size of matrix
+    const int num_elements = m_size*(m_size + 1)/2;
+	LowerTriangularMatrix<int, m_size, num_elements> ltm;
+	ltm.set(0,0,1);
+	ltm.set(1,1,2);
+	ltm.set(2,2,3);
 	
-	ltm.set_element(1,0,4);
-	ltm.set_element(2,0,6);
-	ltm.set_element(2,1,5);
+	ltm.set(1,0,4);
+	ltm.set(2,0,6);
+	ltm.set(2,1,5);
 
-	for(int i=0;i<ltm.size;i++) {
-		for(int j=0;j<ltm.size;j++)
-			std::cout << ltm.get_element(i,j) << " ";
-		std::cout << std::endl;
-	}
+    for(int i=0;i<m_size;i++) {
+        for(int j=0;j<m_size;j++)
+            std::cout << ltm.get(i,j) << "\t";
+        std::cout << std::endl;
+    }
 }
