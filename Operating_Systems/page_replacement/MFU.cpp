@@ -57,15 +57,16 @@ int find_MFU(int frame[], int frame_size, std::map<char, int> references) {
 }
 
 int main() {
-    //std::string reference_string("021240103121");
-    std::string reference_string("70120304230321201701");
+    std::string reference_string("021240103121");
+    //std::string reference_string("70120304230321201701");
 
-    const int frame_size = 3;
+    const int frame_size = 4;
     int frame[frame_size];
     for(int i=0;i<frame_size;i++) frame[i] = -1;
     int num_page_faults = 0;
     
     std::cout << "Reference string: " << reference_string << std::endl;
+    std::cout << "Frame size: " << frame_size << std::endl;
     std::cout << "\nInitially, frame is: ";
     print_frame(frame, frame_size);
     std::cout << std::endl;

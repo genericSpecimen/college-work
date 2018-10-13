@@ -18,7 +18,9 @@ int main() {
     const int first_cylinder = 0;
     const int last_cylinder = 199;
     //----------------------------
-    
+    std::cout << "Requests: ";
+    for(int i=0;i<num_requests;i++) std::cout << requests_queue[i] << " ";
+    std::cout << std::endl;
 
     std::cout << "Enter the current head position: ";
     std::cin >> head;

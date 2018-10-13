@@ -7,6 +7,10 @@ int main() {
     int seek_distance = 0;
     int total_head_movement = 0;
 
+    std::cout << "Requests: ";
+    for(int i=0;i<num_requests;i++) std::cout << requests_queue[i] << " ";
+    std::cout << std::endl;
+
     std::cout << "Enter the current head position: ";
     std::cin >> head;
 

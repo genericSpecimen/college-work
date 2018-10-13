@@ -161,6 +161,7 @@ int main() {
     
     DLL<int> page_stack;
     std::cout << "Reference string: " << reference_string << std::endl;
+	std::cout << "Frame size: " << frame_size << std::endl;
 
     int counter = 0; //keeps track of number of pages in frame
     for(int i=0;i<reference_string.length();i++) {
