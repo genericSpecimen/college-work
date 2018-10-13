@@ -54,14 +54,15 @@ int predict(int i, const std::string& reference_string, int frame[], int frame_s
 }
 
 int main() {
-    //std::string reference_string("021640103121");
-    std::string reference_string("70120304230321201701");
-    const int frame_size = 3;
+    std::string reference_string("021640103121");
+    //std::string reference_string("70120304230321201701");
+    const int frame_size = 4;
     int frame[frame_size];
     for(int i=0;i<frame_size;i++) frame[i] = -1;
     int num_page_faults = 0;
     
     std::cout << "Reference string: " << reference_string << std::endl;
+    std::cout << "Frame size: " << frame_size << std::endl;
     std::cout << "\nInitially, frame is: ";
     print_frame(frame, frame_size);
     std::cout << std::endl;

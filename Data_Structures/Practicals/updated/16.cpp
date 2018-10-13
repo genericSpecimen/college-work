@@ -101,7 +101,7 @@ void merge_sort(int a[], int p, int r) {
 
 int partition(int a[], int p, int r) {
 	int pivot = a[r]; //element to be placed at correct position
-	std::cout << "Partitioned with pivot: " << pivot << std::endl;
+	//std::cout << "Partitioned with pivot: " << pivot << std::endl;
 	int i = p-1; //keeps track of the smaller element
 	for(int j=p;j<r;j++) {
 		if(a[j] <= pivot) {
