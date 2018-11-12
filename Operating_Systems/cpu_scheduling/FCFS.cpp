@@ -1,5 +1,4 @@
 #include<iostream>
-#include<iomanip>
 int main() {
 	int num_p = 3;
 	int burst_times[num_p];
