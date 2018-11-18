@@ -180,33 +180,33 @@ public:
 };
 
 int main() {
-    DLL<int> list1;
+	DLL<int> list1;
 	DLL<int> list2;
 	DLL<int> merged_list;
-    const int size1 = 5;
+	const int size1 = 5;
 	const int size2 = 6;
-    int array1[] = {10,4,7,13,20};
+	int array1[] = {10,4,7,13,20};
 	int array2[] = {14,50,32,24,67,89};
-    std::sort(array1,array1+size1);
+	std::sort(array1,array1+size1);
 	std::sort(array2, array2+size2);
 
-    for(int i=0;i<size1;i++) list1.addToTail(array1[i]);
+	for(int i=0;i<size1;i++) list1.addToTail(array1[i]);
 	std::cout << "LIST 1: ";
 	list1.printList();
 	for(int i=0;i<size2;i++) list2.addToTail(array2[i]);
 	std::cout << "LIST 2: ";
 	list2.printList();
-	
+
 	std::cout << "These are two ordered linked lists. What do you want to do? (1-3)\n";
-    std::cout << "1. Insertion (in the first list)\n";
-    std::cout << "2. Deletion (in the first list)\n";
-    std::cout << "3. Merge the two lists\n";
+	std::cout << "1. Insertion (in the first list)\n";
+	std::cout << "2. Deletion (in the first list)\n";
+	std::cout << "3. Merge the two lists\n";
 	int option; char ans = 'y';
-    do {
-        std::cout << "Enter your choice: ";
-        std::cin >> option;
-        switch(option) {
-            case 1: {
+	do {
+		std::cout << "Enter your choice: ";
+		std::cin >> option;
+		switch(option) {
+			case 1: {
 				double element;
 				std::cout << "Enter element to insert; ";
 				std::cin >> element;
@@ -215,7 +215,7 @@ int main() {
 				list1.printList();
 				break;
 			}
-            case 2: {
+			case 2: {
 				double element;
 				std::cout << "Enter element to delete; ";
 				std::cin >> element;
@@ -224,10 +224,10 @@ int main() {
 				list1.printList();
 				break;
 			}
-            case 3: merged_list = list1 + list2; std::cout << "Merged list: "; merged_list.printList(); break;
-            default: std::cout << "Invalid option\n";
-        }
-        std::cout << "Do you want to continue?(y/n): ";
-        std::cin >> ans;
-    } while(ans == 'y' || ans == 'Y');
+			case 3: merged_list = list1 + list2; std::cout << "Merged list: "; merged_list.printList(); break;
+			default: std::cout << "Invalid option\n";
+		}
+		std::cout << "Do you want to continue?(y/n): ";
+		std::cin >> ans;
+	} while(ans == 'y' || ans == 'Y');
 }
