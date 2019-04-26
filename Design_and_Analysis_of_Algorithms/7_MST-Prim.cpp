@@ -103,15 +103,13 @@ public:
 
         typedef std::pair<unsigned int, unsigned int> puiui;
         std::priority_queue<puiui, std::vector<puiui>, std::greater<puiui>> Q;
-        unsigned int id, key;
-        unsigned int id = vertices[i]->v_id;
-        unsigned int key = vertices[i]->v_key;
-            Q.push(std::make_pair(key, id));
+        Q.push(std::make_pair(0, root));
 
         unsigned int u, v, u_key, weight;
         while(!Q.empty()) {
             u = Q.top().second;
-            key = Q.top().first;
+            u_key = Q.top().first;
+            Q.pop();
             is_in_mst[u] = true;
             std::list<unsigned int>::iterator itr;
             for(itr = adj_lists_array[u].begin(); itr != adj_lists_array[u].end(); itr++) {
@@ -120,18 +118,18 @@ public:
                 if(!is_in_mst[v] && weight < vertices[v]->v_key) {
                     vertices[v]->v_parent = vertices[u];
                     vertices[v]->v_key = weight;
+                    Q.push(std::make_pair(weight, v));
                 }
             }
         }
 
-        std::cout << "Vertices in MST: ";
-        for(int i=0; i<num_vertices; i++) {
-            if(is_in_mst[i]) {
-                std::cout << i+1 << ", ";
-            }
+        std::cout << "Edges in MST:\n";
+        for(int i=1; i<num_vertices; i++) {
+            std::cout << vertices[i]->v_parent->v_id + 1 << "-" << i+1 << "\n";
         }
         std::cout << "\n";
     }
+
 };
 
 
@@ -164,6 +162,7 @@ int main() {
     graph.print_adjacency_lists();
     graph.print_edges();
 
-    graph.MST_Prim(1);
-
+    unsigned int source = 1;
+    source--;
+    graph.MST_Prim(source); // do source--
 }
