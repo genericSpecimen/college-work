@@ -9,6 +9,20 @@
 
 #define INF std::numeric_limits<unsigned int>::max()
 
+/*
+ * WARNING: the std::priority_queue data structure does not provide functions to update the priorities.
+ * The implementation here is as follows:
+ *
+ * Instead of decreasing the key of an existing value, we add values in the priority_queue<pair<Priority, Key>>
+ * without removing the previous invalid ones. This means that there could be duplicate values in the priority_queue
+ * at any point of time.
+ * The priority_queue contains the value with the highest priority (minimum key in this case) at the top. In case
+ * there are duplicates of the same value, we can be sure that the value popped has the minimum key. The moment a value
+ * u is popped, we set is_in_MST[u] = true, which means we have added this vertex to the MST. When the duplicate value is
+ * popped again, setting is_in_MST[u] = true has no new effect.
+ *
+*/
+
 struct Vertex {
     static unsigned int id;
     unsigned int v_id; // id of this vertex
@@ -58,6 +72,7 @@ public:
         }
     }
 
+    //----some utility functions useful for debugging----
     void print_vertex_info() {
         std::cout << "\nVertex information: \n";
         for(int i=0;i<num_vertices;i++) {
@@ -95,6 +110,7 @@ public:
         }
         std::cout << "\n";
     }
+    //---------------------------------------------------
 
     void MST_Prim(unsigned int root) {
         std::vector<bool> is_in_mst(num_vertices, false);
@@ -110,6 +126,7 @@ public:
             u = Q.top().second;
             u_key = Q.top().first;
             Q.pop();
+            //std::cout << "Popped vertex " << u+1 << " with key " << u_key << "\n";
             is_in_mst[u] = true;
             std::list<unsigned int>::iterator itr;
             for(itr = adj_lists_array[u].begin(); itr != adj_lists_array[u].end(); itr++) {
@@ -123,9 +140,11 @@ public:
             }
         }
 
-        std::cout << "Edges in MST:\n";
-        for(int i=1; i<num_vertices; i++) {
-            std::cout << vertices[i]->v_parent->v_id + 1 << "-" << i+1 << "\n";
+        std::cout << "\nEdges in MST:\n";
+        for(int i=0; i<num_vertices; i++) {
+            if(vertices[i]->v_parent != nullptr) {
+                std::cout << vertices[i]->v_parent->v_id + 1 << "-" << i+1 << "\n";
+            }
         }
         std::cout << "\n";
     }
@@ -158,11 +177,15 @@ int main() {
         graph.add_edge(u_id,v_id, directed, weight);
     }
 
+    /*
     graph.print_vertex_info();
     graph.print_adjacency_lists();
     graph.print_edges();
+    */
 
-    unsigned int source = 1;
-    source--;
-    graph.MST_Prim(source); // do source--
+    unsigned int root;
+    std::cout << "\nEnter the root from which MST should be grown from: ";
+    std::cin >> root;
+    root--;
+    graph.MST_Prim(root);
 }
