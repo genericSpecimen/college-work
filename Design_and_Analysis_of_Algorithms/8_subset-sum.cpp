@@ -9,8 +9,8 @@ void print_subset(const std::vector<unsigned int>& set, const std::vector<std::v
         std::cout << "\nA subset with sum " << W  << " exists!\n";
         std::cout << "The subset is: {";
 
-        unsigned int i = n;
-        unsigned int w = W;
+        int i = n;
+        int w = W;
         while(w > 0 && i > 0) {
             if(M[i-1][w] == w) {
                 i--;
