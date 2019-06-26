@@ -1,0 +1,115 @@
+* {box-sizing: border-box}
+
+body {
+  background-color: #111
+}
+
+h1, label {
+  color: #8CC2C2
+}
+
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 25%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+  width: 25%
+}
+
+/* Set a style for the submit/register button */
+.loginbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+  opacity: 0.9;
+}
+
+.loginbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* The navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #111;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+  
+  /* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #8CC2C2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+  
+  /* Change background on mouse-over */
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+  
+  /* Main content */
+.main {
+  margin-top: 80px; /* Add a top margin to avoid content overlay */
+}
+  
+body {
+  margin: 0px;
+  background-color: #111
+}
+ 
+p {
+  color: #f1f1f1;
+  text-align: center;
+}
+  
+hr {
+  border: 1px solid #f1f1f1;
+  margin-top: 50px;
+}
+
+.error { overflow:hidden;  text-align: center; }
+
+span p {
+  background:#222;
+  color:red;
+  display:inline-block;
+  
+  margin:10px 10px 0 0;
+  padding:5px 10px
+}
