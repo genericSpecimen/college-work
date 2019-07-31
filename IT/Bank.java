@@ -1,8 +1,4 @@
-//import java.util.*;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 class BankAccount {
 	int AccountNumber;
@@ -65,15 +61,13 @@ class Bank {
 	}
 
 	int[] getMinMaxBalanceAccountNumber() {
-		List<BankAccount> acc = accounts;
-		Collections.sort(acc, new Comparator<BankAccount>(){
-			@Override
-			public int compare(BankAccount b1, BankAccount b2) {
-				return (int)b1.getBalance()-(int)b2.getBalance();
-			}
-		});
+		int min_idx = 0, max_idx = 0;
+		for(int i = 0; i < accounts.size(); i++) {
+			if(accounts.get(i).Balance < accounts.get(min_idx).Balance) min_idx = i;
+			if(accounts.get(i).Balance > accounts.get(max_idx).Balance) max_idx = i;
 
-		int[] minmax = {accounts.get(0).AccountNumber, accounts.get(accounts.size()-1).AccountNumber};
+		}
+		int[] minmax = {accounts.get(min_idx).AccountNumber, accounts.get(max_idx).AccountNumber};
 		return minmax;
 	}
 
@@ -86,7 +80,7 @@ class Bank {
 		return null;
 	}
 
-	int numAccountsWithBalance(float balance) {
+	int numAccountsWithMinBalance(float balance) {
 		int count = 0;
 		for (BankAccount b : accounts) {
 			if (b.getBalance() >= balance) count++;
@@ -101,6 +95,7 @@ class Bank {
 		BankAccount account2 = new BankAccount(987654321, 10000);
 		BankAccount account3 = new BankAccount(101019181, 102);
 		BankAccount account4 = new BankAccount(786871222, 10023);
+
 		bank.AddAccount(account1);
 		bank.AddAccount(account2);
 		bank.AddAccount(account3);
@@ -124,6 +119,6 @@ class Bank {
 		} else System.out.println("No account with account number " + acnum + " exists!\n");
 
 		int balance = 1000;
-		System.out.println("Number of accounts with atleast " + balance + " " + bank.numAccountsWithBalance(balance) + "\n");
+		System.out.println("Number of accounts with atleast " + balance + " balance: " + bank.numAccountsWithMinBalance(balance) + "\n");
 	}
 }
