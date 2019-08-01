@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 8
-#define YY_END_OF_BUFFER 9
+#define YY_NUM_RULES 3
+#define YY_END_OF_BUFFER 4
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,10 +363,9 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[13] =
+static const flex_int16_t yy_accept[8] =
     {   0,
-        0,    0,    9,    8,    7,    4,    5,    6,    1,    2,
-        3,    0
+        0,    0,    4,    3,    1,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -379,12 +378,12 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    2,    2,    2,    2,    2,    2,
         2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
-        2,    2,    2,    2,    2,    2,    2,    3,    4,    5,
-        1,    1,    1,    1,    1,    1,    2,    2,    1,    1,
+        2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
+        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    6,
-        7,    8,    1,    1,    1,    1,    1,    1,    1,    1,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -401,33 +400,29 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[9] =
+static const YY_CHAR yy_meta[4] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1
+        1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[13] =
+static const flex_int16_t yy_base[8] =
     {   0,
-        0,    0,    9,   10,   10,   10,   10,   10,   10,   10,
-       10,   10
+        0,    0,    4,    5,    5,    5,    5
     } ;
 
-static const flex_int16_t yy_def[13] =
+static const flex_int16_t yy_def[8] =
     {   0,
-       12,    1,   12,   12,   12,   12,   12,   12,   12,   12,
-       12,    0
+        7,    1,    7,    7,    7,    7,    0
     } ;
 
-static const flex_int16_t yy_nxt[19] =
+static const flex_int16_t yy_nxt[9] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,   12,    3,
-       12,   12,   12,   12,   12,   12,   12,   12
+        4,    5,    6,    7,    3,    7,    7,    7
     } ;
 
-static const flex_int16_t yy_chk[19] =
+static const flex_int16_t yy_chk[9] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    3,   12,
-       12,   12,   12,   12,   12,   12,   12,   12
+        1,    1,    1,    3,    7,    7,    7,    7
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -447,8 +442,8 @@ char *yytext;
 #line 1 "2_caesar-cipher.l"
 #line 2 "2_caesar-cipher.l"
 	#include <stdio.h>
-#line 451 "lex.yy.c"
-#line 452 "lex.yy.c"
+#line 446 "lex.yy.c"
+#line 447 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -667,8 +662,7 @@ YY_DECL
 	{
 #line 7 "2_caesar-cipher.l"
 
-
-#line 672 "lex.yy.c"
+#line 666 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -695,13 +689,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 13 )
+				if ( yy_current_state >= 8 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 10 );
+		while ( yy_base[yy_current_state] != 5 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -727,45 +721,28 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "2_caesar-cipher.l"
-{ printf("%c", 'a');}
+#line 8 "2_caesar-cipher.l"
+{
+		char ch = yytext[0];
+		ch = ((ch - 'A' + 3) % 26) + 'A';
+		printf ("%c", ch);
+	}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "2_caesar-cipher.l"
-{ printf("%c", 'b');}
+#line 13 "2_caesar-cipher.l"
+{
+		char ch = yytext[0];
+		ch = ((ch - 'a' + 3) % 26) + 'a';
+		printf ("%c", ch);
+	}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "2_caesar-cipher.l"
-{ printf("%c", 'c');}
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 12 "2_caesar-cipher.l"
-{ printf("%c", 'A');}
-	YY_BREAK
-case 5:
-YY_RULE_SETUP
-#line 13 "2_caesar-cipher.l"
-{ printf("%c", 'B');}
-	YY_BREAK
-case 6:
-YY_RULE_SETUP
-#line 14 "2_caesar-cipher.l"
-{ printf("%c", 'C');}
-	YY_BREAK
-case 7:
-YY_RULE_SETUP
-#line 16 "2_caesar-cipher.l"
-{ printf("%c", yytext[0] + 3); }
-	YY_BREAK
-case 8:
-YY_RULE_SETUP
-#line 19 "2_caesar-cipher.l"
+#line 20 "2_caesar-cipher.l"
 ECHO;
 	YY_BREAK
-#line 769 "lex.yy.c"
+#line 746 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1062,7 +1039,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 13 )
+			if ( yy_current_state >= 8 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1090,11 +1067,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 13 )
+		if ( yy_current_state >= 8 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 12);
+	yy_is_jam = (yy_current_state == 7);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1770,7 +1747,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 19 "2_caesar-cipher.l"
+#line 20 "2_caesar-cipher.l"
 
 
 int main(void) {
