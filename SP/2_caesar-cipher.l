@@ -5,15 +5,16 @@
 %option noyywrap
 
 %%
-
-x { printf("%c", 'a');}
-y { printf("%c", 'b');}
-z { printf("%c", 'c');}
-X { printf("%c", 'A');}
-Y { printf("%c", 'B');}
-Z { printf("%c", 'C');}
-
-[a-bA-Z] { printf("%c", yytext[0] + 3); }
+[A-Z] {
+		char ch = yytext[0];
+		ch = ((ch - 'A' + 3) % 26) + 'A';
+		printf ("%c", ch);
+	}
+[a-z] {
+		char ch = yytext[0];
+		ch = ((ch - 'a' + 3) % 26) + 'a';
+		printf ("%c", ch);
+	}
 
 
 %%
