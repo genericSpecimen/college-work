@@ -34,6 +34,10 @@ class StaticStack extends Stack {
 	}
 
 	void display() {
+		if (top == -1) {
+			System.out.println("Stack is empty!");
+			return;
+		}
 		System.out.println("Current stack:");
 		for(int i = top; i >= 0; i--) {
 			if (i == top) System.out.println(stack[i] + " (TOP)");	
@@ -66,6 +70,10 @@ class DynamicStack extends Stack {
 	}
 
 	void display() {
+		if(stack.isEmpty()) {
+			System.out.println("Stack is empty!");
+			return;
+		}
 		System.out.println("Current stack:");
 		for(int i = stack.size()-1; i >= 0; i--) {
 			if(i == stack.size()-1) System.out.println(stack.get(i) + " (TOP)");
