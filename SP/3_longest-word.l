@@ -1,10 +1,8 @@
 %{
 	#include <stdio.h>
 	#include <string.h>
-	char * word = NULL;
-	char * longest = NULL;
-	int max = -1;
-	int len = -1;
+	int max = 0;
+	char longest[256];
 %}
 
 %option noyywrap
@@ -12,25 +10,19 @@
 %%
 
 [a-zA-Z]+ {
-		word = yytext;
-		len = strlen(word);
-		// printf ("%s with length %d ", word, len);
-		if (len > max) {
-			// printf("%d > %d", len, max);
-			longest = word;
-			max = len;
-			// printf("%s is current longest with %d length", longest, max);
-		} else {
-			// printf("hecc\n");
+		// printf("%s is of %d\n", yytext, yyleng);
+		if (yyleng > max) {
+			max = yyleng;
+			strcpy(longest, yytext);
+			// printf("%s is the current longest\n", longest);
 		}
 	}
-
 %%
 
 int main(void) {
 	printf("Press Ctrl-D (on unix) or Ctrl-Z (on windows) when you are done entering..\n");
 	yylex();
-	printf("%s is the longest word, and is of %d characters \n", longest, max);
+	printf("\n %s is the longest word, and is of %d characters \n", longest, max);
 	return 0;
 }
 
