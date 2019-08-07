@@ -443,12 +443,10 @@ char *yytext;
 #line 2 "3_longest-word.l"
 	#include <stdio.h>
 	#include <string.h>
-	char * word = NULL;
-	char * longest = NULL;
-	int max = -1;
-	int len = -1;
-#line 451 "lex.yy.c"
-#line 452 "lex.yy.c"
+	int max = 0;
+	char longest[256];
+#line 449 "lex.yy.c"
+#line 450 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -665,10 +663,10 @@ YY_DECL
 		}
 
 	{
-#line 12 "3_longest-word.l"
+#line 10 "3_longest-word.l"
 
 
-#line 672 "lex.yy.c"
+#line 670 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -727,27 +725,22 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "3_longest-word.l"
+#line 12 "3_longest-word.l"
 {
-		word = yytext;
-		len = strlen(word);
-		// printf ("%s with length %d ", word, len);
-		if (len > max) {
-			// printf("%d > %d", len, max);
-			longest = word;
-			max = len;
-			// printf("%s is current longest with %d length", longest, max);
-		} else {
-			// printf("hecc\n");
+		// printf("%s is of %d\n", yytext, yyleng);
+		if (yyleng > max) {
+			max = yyleng;
+			strcpy(longest, yytext);
+			// printf("%s is the current longest\n", longest);
 		}
 	}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 28 "3_longest-word.l"
+#line 20 "3_longest-word.l"
 ECHO;
 	YY_BREAK
-#line 751 "lex.yy.c"
+#line 744 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1752,13 +1745,13 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 28 "3_longest-word.l"
+#line 20 "3_longest-word.l"
 
 
 int main(void) {
 	printf("Press Ctrl-D (on unix) or Ctrl-Z (on windows) when you are done entering..\n");
 	yylex();
-	printf("%s is the longest word, and is of %d characters \n", longest, max);
+	printf("\n %s is the longest word, and is of %d characters \n", longest, max);
 	return 0;
 }
 
