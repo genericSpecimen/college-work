@@ -3,22 +3,23 @@
 %}
 
 %option noyywrap
+
 KEYWORD		int|float|void|double|while|for|do|main|printf
 DIGIT		[0-9]
 INTEGER		{DIGIT}+
 FLOAT		{DIGIT}+.{DIGIT}+
-IDENTIFIER	[_a-zA-Z][A-Za-z0-9_]*	
+IDENTIFIER	[_a-zA-Z][A-Za-z0-9_]*
 OP		[-+/*]
-COMMENT		[/]{2,}.*	
-%%
+COMMENT		[/]{2,}.*
 
-KEYWORD		{ printf("%s is a keyword!\n", yytext); }
-INTEGER		{ printf("%s is an integer!", yytext); }	
-FLOAT		{ printf("%s is a floating point number!", yytext); }
-IDENTIFIER	{ printf("%s is an identifier!", yytext);}
-OP		{ printf("%s is an operator!", yytext); }
-COMMENT		{ printf("%s is a comment", yytext);}
-.*		{ printf("Unknown character!"); }
+%%
+[ \n\t]		{}
+{KEYWORD}	{ printf("%s is a keyword!\n", yytext); }
+{INTEGER}	{ printf("%s is an integer!\n", yytext); }	
+{FLOAT}		{ printf("%s is a floating point number!\n", yytext); }
+{IDENTIFIER}	{ printf("%s is an identifier!\n", yytext);}
+{OP}		{ printf("%s is an operator!\n", yytext); }
+{COMMENT}	{ printf("%s is a comment\n", yytext);}
 %%
 
 int main(void) {
