@@ -18,7 +18,6 @@ COMMENT         [/]{2,}.*
 {FUNCTION}	// { printf("%s is a function or function call\n", yytext); }
 {STRING}	//{ printf("%s is a string\n", yytext);}
 {COMMENT}       //{ printf("%s is a comment\n", yytext);}
-[^ \n\t]	{}
 %%
 
 int main(void) {
