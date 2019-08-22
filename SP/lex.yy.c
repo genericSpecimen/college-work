@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 9
-#define YY_END_OF_BUFFER 10
+#define YY_NUM_RULES 8
+#define YY_END_OF_BUFFER 9
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -365,7 +365,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[137] =
     {   0,
-        0,    0,   10,    8,    1,    8,    8,    8,    4,    4,
+        0,    0,    9,    8,    1,    8,    8,    8,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
         4,    4,    4,    4,    4,    0,    6,    0,    3,    7,
         0,    0,    4,    4,    4,    4,    4,    4,    4,    2,
@@ -917,14 +917,9 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 21 "5_num-identifiers-c.l"
-{}
-	YY_BREAK
-case 9:
-YY_RULE_SETUP
-#line 22 "5_num-identifiers-c.l"
 ECHO;
 	YY_BREAK
-#line 927 "lex.yy.c"
+#line 922 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1929,7 +1924,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 22 "5_num-identifiers-c.l"
+#line 21 "5_num-identifiers-c.l"
 
 
 int main(void) {
