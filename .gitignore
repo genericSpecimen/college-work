@@ -2,3 +2,7 @@
 *.class
 a.out
 *.o
+*.EXE
+*.MAP
+*.COM
+*.OBJ
