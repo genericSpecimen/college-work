@@ -1,0 +1,20 @@
+Turbo Assembler	 Version 2.51	     08/23/19 11:51:44	    Page 1
+hello.ASM
+
+
+
+      1	0000			     .model small
+      2	0000			     .stack 100h
+      3	0000			     .data
+      4	0000  68 65 6C 6C 6F 20	77+  message db	'hello world$'
+      5	      6F 72 6C 64 24
+      6	000C			     .code
+      7	0000  B8 0000s		     mov ax,@data
+      8	0003  8E D8		     mov ds,ax
+      9	0005  B4 09		     mov ah,9
+     10	0007  BA 0000r		     mov dx,OFFSET message
+     11	000A  CD 21		     int 21h
+     12	000C  B4 4C		     mov ah,4ch
+     13	000E  CD 21		     int 21h
+     14				     end
+

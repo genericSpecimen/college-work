@@ -1,0 +1,20 @@
+TASM tutorial:
+http://www.petesqbsite.com/sections/tutorials/tuts/doorknob/asm_tutorial1.html
+
+TASM 5.0 User Manual:
+https://archive.org/details/bitsavers_borlandturemblerVersion5UsersGuide_13693550/
+
+DOS Interrupt Jump table:
+http://www.ctyme.com/intr/int.htm
+eg: http://www.ctyme.com/intr/rb-2974.htm
+
+Wiki page that shows different types of assembly language syntax (see examples):
+https://en.wikipedia.org/wiki/X86_assembly_language
+
+
+
+Other resources:
+NASM tutorial (textual): https://asmtutor.com
+NASM tutorial (videos): https://www.youtube.com/playlist?list=PLmxT2pVYo5LB5EzTPZGfFN0c2GDiSXgQe
+
+ 
