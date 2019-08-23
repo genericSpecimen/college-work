@@ -1,7 +1,7 @@
 .model small
 .stack 100h
 .data
-message db 'hello world'
+message db 'hello world$'
 .code
 mov ax,@data
 mov ds,ax
