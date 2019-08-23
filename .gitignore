@@ -2,7 +2,6 @@
 *.class
 a.out
 *.o
-*.EXE
-*.MAP
-*.COM
-*.OBJ
+MP/TASM/SRC/*.EXE
+MP/TASM/SRC/*.MAP
+MP/TASM/SRC/*.OBJ
