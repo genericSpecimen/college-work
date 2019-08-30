@@ -1,0 +1,20 @@
+We are escapists. 
+
+	* TASM tutorial: http://www.petesqbsite.com/sections/tutorials/tuts/doorknob/asm_tutorial1.html 
+	* TASM 5.0 User Manual: https://archive.org/details/bitsavers_borlandturemblerVersion5UsersGuide_13693550/ 
+	* DOS Interrupt Jump table: http://www.ctyme.com/intr/int.htm eg: http://www.ctyme.com/intr/rb-2974.htm 
+	* Wiki page that shows different types of assembly language syntax (see examples): https://en.wikipedia.org/wiki/X86_assembly_language
+	* x86 Assembly wikibooks page: https://en.wikibooks.org/wiki/X86_Assembly
+	* x86 Assembly Language Programming (includes Programming for DOS): https://cs.lmu.edu/~ray/notes/x86assembly/
+
+Other resources:
+	* NASM tutorial (textual): https://asmtutor.com
+	* NASM tutorial (videos): https://www.youtube.com/playlist?list=PLmxT2pVYo5LB5EzTPZGfFN0c2GDiSXgQe   
+	* x86 Assembly Guide using MASM: http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
+	* YASM User Manual (other useful resources too, NASM, x86 GPRs, Object formats, ): http://www.tortall.net/projects/yasm/manual/html/index.html
+	* A fundamental introduction to x86 assembly programming: https://www.nayuki.io/page/a-fundamental-introduction-to-x86-assembly-programming (AT&T Syntax)
+	* https://www.hep.wisc.edu/~pinghc/x86AssmTutorial.htm
+	* Online x86 / x64 Assembler and Disassembler: https://defuse.ca/online-x86-assembler.htm
+	* Introduction to Linux Intel Assembly Language: http://heather.cs.ucdavis.edu/~matloff/50/LinuxAssembly.html
+	* x86-64 Assembly Language Programming with Ubuntu: http://www.egr.unlv.edu/~ed/assembly64.pdf
+	* Reverse Engineering for Beginners(Understanding Assembly Language): https://beginners.re/RE4B-EN.pdf
