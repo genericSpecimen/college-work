@@ -3,5 +3,8 @@
 a.out
 *.o
 *.EXE
+!TASM.EXE
+!TLINK.EXE
+!TD.EXE
 *.MAP
 *.OBJ
