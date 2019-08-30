@@ -1,0 +1,7 @@
+*.swp
+*.class
+a.out
+*.o
+*.EXE
+*.MAP
+*.OBJ
