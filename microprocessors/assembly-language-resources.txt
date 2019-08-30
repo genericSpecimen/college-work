@@ -1,4 +1,3 @@
-We are escapists. 
 
 	* TASM tutorial: http://www.petesqbsite.com/sections/tutorials/tuts/doorknob/asm_tutorial1.html 
 	* TASM 5.0 User Manual: https://archive.org/details/bitsavers_borlandturemblerVersion5UsersGuide_13693550/ 
