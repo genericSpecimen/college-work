@@ -8,15 +8,20 @@
 WORD		[a-zA-Z]+
 
 %%
-\n			{ num_lines++; num_chars++; }
-[[:space:]]		{ num_bs++; num_chars++; }
-{WORD}			{ num_words++; num_chars += yyleng; }
-.*			{ num_chars++; }
+\n			{ /*printf("New line ");*/ num_lines++; num_chars++; }
+[[:space:]]		{ /*printf("space ");*/ num_bs++; num_chars++; }
+{WORD}			{ /*printf("word ");*/ num_words++; num_chars += yyleng; }
+.			{ /*printf("unknown character ");*/ num_chars++;}
 %%
 
-int main(void) {
+int main(int argc, char*argv[]) {
+	if(argc != 2) {
+		printf("Please enter filename to read. Example: ./a.out hello.c\n");
+		return 1;
+	}
+	yyin = fopen(argv[1], "r");
 	yylex();
-	printf("\n\nNumber of\nwords: %d\ncharacters: %d\nblank spaces: %d\nlines: %d\n", num_words, num_chars, num_bs, num_lines);
+	printf("Number of\n\twords: %d\n\tcharacters: %d\n\tblank spaces: %d\n\tlines: %d\n", num_words, num_chars, num_bs, num_lines);
 	return 0;
 }
 
