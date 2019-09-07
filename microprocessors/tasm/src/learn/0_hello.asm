@@ -8,7 +8,7 @@ MSG DB "Hello World$"
 .CODE
 
 START:
-        MOV AX, SEG MSG
+	MOV AX, SEG MSG
 	MOV DS, AX
 	MOV DX, OFFSET MSG
 	MOV AH, 09H

@@ -1,0 +1,28 @@
+.MODEL MEDIUM
+.STACK 200H
+
+.CODE
+
+START:
+	MOV AX, 0013H ; mode 13h for graphics: 320 x 200 x 256
+	INT 10H
+
+	MOV BX, 0A000H	; segment for mode 13H starts from A000
+	MOV ES, BX
+	MOV BX, 0	; and offset 0
+	MOV AH, 1
+
+	MOV CX, 64000	; 320 x 200 = 64000
+
+	STARTLOOP:
+		MOV ES:[BX], AH
+		INC BX
+		INC AH
+	LOOP STARTLOOP
+
+	MOV AX, 0100H
+	INT 21H
+
+	MOV AX, 4C00H
+	INT 21H
+END START
