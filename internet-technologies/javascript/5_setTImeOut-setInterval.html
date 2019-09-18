@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Change text color</title>
+    </head>
+    <body>
+            <h1 id="colorText">This text will change to crimson color after 2 seconds.</h1>
+            <img id="movingImage" src="penguin.jpg" height="168" width="240">
+
+            <script>
+                function changeTextColor() {
+                    document.getElementById('colorText').style.color = "crimson";
+                }
+                function moveImageToLeft() {
+                    let img = document.getElementById('movingImage');
+                    img.style.position = "relative";
+                    img.style.left = (++x % screen.availWidth) + "px";
+                }
+                setTimeout(changeTextColor, 2000);
+
+                let x = 10;
+                setInterval(moveImageToLeft, 50);
+            </script>
+    </body>
+</html>

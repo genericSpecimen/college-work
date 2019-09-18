@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Sort an array with bubble sort</title>
+        <script>
+            function sortArray() {
+                const numElements = document.getElementById('numElements').value;
+                let inputArray = document.getElementById('inputArray').value.split(" ");
+                for(let i=0; i<numElements; i++) inputArray[i] = parseInt(inputArray[i], 10);
+
+                if(inputArray.length != numElements) {
+                    document.getElementById('error').textContent = "Number of elements doesn't match.";
+                    return;
+                }
+
+                // bubble sort
+                let swapped = false;
+                let temp = null;
+                for(let i=0; i<numElements-1; i++) {
+                    for(let j=0; j<numElements-i-1; j++) {
+                        if(inputArray[j] > inputArray[j+1]) {
+                            temp = inputArray[j];
+                            inputArray[j] = inputArray[j+1];
+                            inputArray[j+1] = temp;
+                            swapped = true;
+                        }
+                        if(!swapped) break;
+                    }
+                }
+                document.getElementById('sortedArray').textContent = "Sorted Array: " + inputArray;
+            }
+        </script>
+    </head>
+    <body>
+        Enter size of array: <input type="number" id="numElements"> <br>
+        Enter the elements (separated by spaces): <input type="text" id="inputArray"> <br>
+        <div id="error" style="color: crimson"></div>
+        <button id="sort-btn" onclick="sortArray()">Sort Array</button>
+
+        <div id="sortedArray" style="color: green"></div>
+    </body>
+</html>

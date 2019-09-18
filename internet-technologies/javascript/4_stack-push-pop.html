@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Stack operations - push and pop</title>
+        <style>
+            .column {
+                float: left;
+                width: 50%;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        </style>
+        <script>
+            let stack = [];
+            let stackLog = "--> Stack log <--\n";
+            function push(num) {
+                if(isNaN(num)) {
+                    stackLog += "NaN can't be pushed.\n";
+                    return;
+                }
+                stack.push(num);
+                stackLog += "Pushed: " + num + "\n";
+            }
+            function pop() {
+                if(stack.length === 0) {
+                    stackLog += "Can't pop as stack is empty\n";
+                } else stackLog += "Popped: " + stack.pop() + "\n";
+            }
+            function showInputField(bool) {
+                if(bool) {
+                    document.getElementById('num-label').hidden = false;
+                    document.getElementById('num').hidden = false;
+                } else {
+                    document.getElementById('num-label').hidden = true;
+                    document.getElementById('num').hidden = true;
+                }
+            }
+            function performOperation() {
+                if(document.getElementsByName('operation')[0].checked) {
+                    push(parseInt(document.getElementById('num').value));
+                    document.getElementById('num').focus();
+                } else pop();
+            }
+
+            function showCurrentStack() {
+                let outputString = "--> Current stack <--\n";
+                for(let i=stack.length - 1; i >= 0; i--) {
+                    if(i === stack.length - 1) outputString += stack[i] + "<-- TOP\n";
+                    else outputString += stack[i] + "\n";
+                }
+                document.getElementById('stack-output').textContent = outputString;
+                document.getElementById('stack-log').textContent = stackLog;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Stack simulator</h1>
+        <h3>Choose an option: </h3>
+        <input type="radio" name="operation" id="push-radio" value="push" onchange="showInputField(true)"> Push
+        <label for="num" id="num-label">&nbsp; &nbsp; &nbsp; &nbsp; Enter a number to push</label>
+        <input type="number" name="num" id="num" onkeyup="if(event.keyCode === 13) document.getElementById('perform-btn').click();"> <br>
+        <input type="radio" name="operation" id="pop-radio" value="pop" onchange="showInputField(false)"> Pop <br>
+        <button id="perform-btn" onclick="performOperation(); showCurrentStack();">Perform selected operation</button> <br>
+
+        <div class="row">
+            <div class="column" style="white-space: pre-wrap" id="stack-output"></div>
+            <div class="column" style="white-space: pre-wrap" id="stack-log"></div>
+        </div>
+        <div style="white-space: pre-wrap" id="stack-output"></div>
+    </body>
+</html>
