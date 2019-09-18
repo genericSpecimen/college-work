@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <form>
+            <input id="userinput" type="text" onchange="makeUpper()"><br>
+        </form>
+        <script>
+            function makeUpper() {
+                var input = document.getElementById('userinput').value;
+                console.log(input);
+                document.write(input.toUpperCase());
+            }
+        </script>
+    </body>
+</html>

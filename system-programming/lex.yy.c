@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 3
+#define YY_END_OF_BUFFER 4
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -365,25 +365,25 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[11] =
     {   0,
-        0,    0,    5,    3,    1,    1,    3,    0,    2,    0
+        0,    0,    4,    3,    1,    3,    0,    0,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    2,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    4,    4,    4,
+        1,    1,    1,    1,    1,    1,    3,    1,    1,    1,
+        1,    3,    3,    3,    3,    3,    3,    4,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    1,    1,    1,
-        1,    1,    1,    1,    5,    1,    1,    5,    5,    1,
-        1,    1,    1,    1,    1,    1,    1,    5,    5,    5,
-        1,    5,    1,    5,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    5,    1,    5,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -400,33 +400,33 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[6] =
+static const YY_CHAR yy_meta[5] =
     {   0,
-        1,    1,    1,    1,    2
+        1,    1,    1,    2
     } ;
 
 static const flex_int16_t yy_base[12] =
     {   0,
-        0,    0,    9,   10,   10,   10,    2,    0,    0,   10,
-        6
+        0,    0,    9,   10,   10,    2,    0,    0,    4,   10,
+        5
     } ;
 
 static const flex_int16_t yy_def[12] =
     {   0,
-       10,    1,   10,   10,   10,   10,   10,    7,   11,    0,
+       10,    1,   10,   10,   10,   10,   11,    6,    6,    0,
        10
     } ;
 
-static const flex_int16_t yy_nxt[16] =
+static const flex_int16_t yy_nxt[15] =
     {   0,
-        4,    5,    6,    7,    4,    8,    9,    9,   10,    3,
-       10,   10,   10,   10,   10
+        4,    5,    4,    6,    7,    8,    9,    9,   10,    3,
+       10,   10,   10,   10
     } ;
 
-static const flex_int16_t yy_chk[16] =
+static const flex_int16_t yy_chk[15] =
     {   0,
-        1,    1,    1,    1,    1,    7,    7,   11,    3,   10,
-       10,   10,   10,   10,   10
+        1,    1,    1,    1,    6,    6,   11,    9,    3,   10,
+       10,   10,   10,   10
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -732,19 +732,14 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 11 "8_valid-arithmetic-expression.l"
-{printf("possibly valid expression\n");}
+{ printf("valid\n");}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 12 "8_valid-arithmetic-expression.l"
-{ printf("invalid\n"); }
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 13 "8_valid-arithmetic-expression.l"
 ECHO;
 	YY_BREAK
-#line 747 "lex.yy.c"
+#line 742 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1749,7 +1744,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 13 "8_valid-arithmetic-expression.l"
+#line 12 "8_valid-arithmetic-expression.l"
 
 
 int main(int argc, char *argv[]) {
