@@ -1,0 +1,15 @@
+<html>
+    <script>
+        function calculate(form) {
+            document.getElementById("results").textContent = eval(form.entry.value);
+        }
+    </script>
+
+    <body>
+        <form>
+            <input type="text" name="entry">
+            <input type="button" value="Calculate" onclick="calculate(this.form);"><br>
+        </form>
+        <p name="results" id="results"></p>
+    </body>
+</html>

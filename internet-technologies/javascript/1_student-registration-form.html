@@ -1,0 +1,61 @@
+    <html>
+        <head>
+            <title>Student registration form</title>
+            <script>
+                function verify() {
+                    const rollno = document.getElementById('rollno');
+                    const name = document.getElementById('name');
+                    const dob = document.getElementById('dob');
+                    const rollnoerror = document.getElementById('rollnoerror');
+                    const namerror = document.getElementById('namerror');
+                    const doberror = document.getElementById('doberror');
+                    const successMsg = document.getElementById('successMsg');
+
+                    // Roll number validation
+                    if(rollno.value == "") {
+                        rollnoerror.textContent = "Roll number can't be empty";
+                        return false;
+                    } else if(rollno.value.toString().length !== 7) {
+                        rollnoerror.textContent = "Roll number must be of length 7";
+                        rollno.focus();
+                        return false;
+                    } else rollnoerror.textContent = "";
+
+                    // name validation
+                    if(name.value == "") {
+                        namerror.textContent = "Name can't be empty";
+                        return false;
+                    } else {
+                        nonAlphaPatt = /[^a-zA-Z\ ]/;
+                        if(nonAlphaPatt.test(name.value)) {
+                            namerror.textContent = "Invalid name, make sure it contains only alphabets and space";
+                            name.focus();
+                            return false;
+                        } else namerror.textContent = "";
+                    }
+
+                    // dob validation
+                    if(dob.value == "") {
+                        doberror.textContent = "Date of birth can't be empty";
+                        return false;
+                    }
+
+                    let DOB = new Date(dob.value);
+
+                    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    let DOBfmt = days[DOB.getDay()] + ', ' + months[DOB.getMonth()] + ' ' + DOB.getDate() + ', ' + DOB.getFullYear();
+                    alert("All validation checks have passed.\nRoll no: " + rollno.value + "\nName: " + name.value + "\nDate of birth: " + DOBfmt);
+                    return true;
+                }
+            </script>
+        </head>
+        <body>
+            <form method="POST" onsubmit="return verify();">
+                Enter roll no: <input type="number" name="rollno" id="rollno"> <div id="rollnoerror" style="color: crimson"></div>
+                Enter name: <input type="name" name="name" id="name"> <div id="namerror"style="color: crimson"></div>
+                Enter DoB: <input type="date" name="dob" id="dob"> <div id="doberror"style="color: crimson"></div>
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        </body>
+    </html>

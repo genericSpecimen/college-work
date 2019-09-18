@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script>
+            function test() {
+                console.log("called test");
+                //alert("lol");
+                document.write("lol");
+                return true;
+            }
+        </script>
+    </head>
+
+    <body>
+        <form method="POST" onsubmit="return test();">
+        <input type="text"> <br>
+        <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

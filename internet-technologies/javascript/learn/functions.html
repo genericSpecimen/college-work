@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script>
+            var name;
+            function hello() {
+                name = prompt("Enter your name", "name");
+                alert("hello " + name);
+            }
+            function goodbye() {
+                alert("bye");
+            }
+            window.onbeforeunload = goodbye;
+        </script>
+    </head>
+    <body onLoad="hello()">
+        
+    </body>
+</html>
