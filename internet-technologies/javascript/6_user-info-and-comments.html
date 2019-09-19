@@ -1,0 +1,94 @@
+<html>
+    <title>User information and comments</title>
+    <head>
+        <style>
+            .userinfo { display: table;}
+            .userinfo p {display: table-row;}
+            .userinfo label {display: table-cell;}
+            .userinfo input {display: table-cell;}
+        </style>
+        <script>
+            function verify() {
+                let elems = document.getElementById('userinfoandcomments').elements;
+                for (let i=0;i<elems.length; i++) {
+                    if(elems[i].value === "") {
+                        alert("You forgot one of the fields. Please try again.");
+                        elems[i].focus();
+                        return false;
+                    }
+                }
+                alert("Thanks for filling the survey.");
+                return true;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>INFONET SERVICES</h1>
+        <form id="userinfoandcomments" onsubmit="return verify();">
+            <div class="userinfo">
+                <p>
+                    <label for="fname">First name</label>
+                    <input id="fname" type="text"> <br>
+                </p>
+                <p>
+                    <label for="lname">Last name</label>
+                    <input id="lname" type="text"> <br>
+                </p>
+                <p>
+                    <label for="email">Email address</label>
+                    <input id="email" type="text"> <br>
+                </p>
+                <p>
+                    <label for="addr">Address</label>
+                    <input id="addr" type="text"> <br>
+                </p>
+                <p>
+                    <label for="city">City</label>
+                    <input id="city" type="text"> <br>
+                </p>
+                <p>
+                    <label for="state">State</label>
+                    <input id="state" type="text"> <br>
+                </p>
+                <p>
+                    <label for="postalcode">Postal code</label>
+                    <input id="postalcode" type="text"> <br>
+                </p>
+                <p>
+                    <label for="country">Country</label>
+                    <input id="country" type="text"> <br>
+                </p>
+            </div>
+
+            <h4><i>Please choose the most appropriate statement</i></h4>
+            <input type="radio" name="online" id="r1"> <label for="r1">I regularly purchase items online</label> <br>
+            <input type="radio" name="online" id="r2"> <label for="r2">I have on occasion purchased items online</label> <br>
+            <input type="radio" name="online" id="r3"> <label for="r3">I have not purchased anything online, but I would consider it</label> <br>
+            <input type="radio" name="online" id="r4"> <label for="r4">I prefer to shop in real stores</label> <br>
+
+            <h4><i>I'm interested in (choose all that apply)</i></h4>
+            <input type="checkbox" id="c1"> <label for="c1">Hiking</label> <br>
+            <input type="checkbox" id="c2"> <label for="c2">Mountain Biking</label> <br>
+            <input type="checkbox" id="c3"> <label for="c3">Camping</label> <br>
+            <input type="checkbox" id="c4"> <label for="c4">Rock Climbing</label> <br>
+            <input type="checkbox" id="c5"> <label for="c5">Off-Road 4WD</label> <br>
+            <input type="checkbox" id="c6"> <label for="c6">Cross-country Skiing</label> <br>
+
+            <h4><i>I learned about this site from</i></h4>
+            <select id="referral">
+                <option value="">Select from drop down menu</option>
+                <option value="print">Print ads</option>
+                <option value="visit">In store visit</option>
+                <option value="rec">Friend's recommendation</option>
+                <option value="internet">Sourced on the internet</option>
+                <option value="other">Other</option>
+            </select>
+
+            <h4><i>Comments</i></h4>
+            <textarea id="comments" cols="40" rows="5" placeholder="Please type any comments here.."></textarea> <br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Start over">
+
+        </form>
+    </body>
+</html>
