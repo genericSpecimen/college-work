@@ -1,13 +1,19 @@
+	1. (Recommended first read) Portland Community College X86 Assembly Language Programming Course (TASM): http://spot.pcc.edu/~wlara/asmx86/ 
+	1. General structure and overview of 8086 assembly (uses TASM): https://www.shsu.edu/~csc_tjm/fall2002/cs272/intro_to_asm.html 
+	1. MOTHERLODE https://stackoverflow.com/tags/x86/info
+	1. TASM tutorial: http://www.petesqbsite.com/sections/tutorials/tuts/doorknob/asm_tutorial1.html 
+	1. Using DEBUG to see program state and registers: https://youtu.be/_aXM8K7RuZE
+	1. DOS Interrupt Jump table: http://www.ctyme.com/intr/int.htm eg: http://www.ctyme.com/intr/rb-2974.htm
+	1. Useful interrupts: http://spike.scu.edu.au/~barry/interrupts.html
+	1. TASM 5.0 User Manual: https://archive.org/details/bitsavers_borlandturemblerVersion5UsersGuide_13693550/
 
-	* TASM tutorial: http://www.petesqbsite.com/sections/tutorials/tuts/doorknob/asm_tutorial1.html 
+Other resources:
 	* TASM 5.0 User Manual: https://archive.org/details/bitsavers_borlandturemblerVersion5UsersGuide_13693550/ 
-	* DOS Interrupt Jump table: http://www.ctyme.com/intr/int.htm eg: http://www.ctyme.com/intr/rb-2974.htm 
 	* Wiki page that shows different types of assembly language syntax (see examples): https://en.wikipedia.org/wiki/X86_assembly_language
 	* x86 Assembly wikibooks page: https://en.wikibooks.org/wiki/X86_Assembly
 	* x86 Assembly Language Programming (includes Programming for DOS): https://cs.lmu.edu/~ray/notes/x86assembly/
-
-Other resources:
 	* NASM tutorial (textual): https://asmtutor.com
+	* NASM tutorialspoint: https://www.tutorialspoint.com/assembly_programming/index.htm
 	* NASM tutorial (videos): https://www.youtube.com/playlist?list=PLmxT2pVYo5LB5EzTPZGfFN0c2GDiSXgQe   
 	* x86 Assembly Guide using MASM: http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
 	* YASM User Manual (other useful resources too, NASM, x86 GPRs, Object formats, ): http://www.tortall.net/projects/yasm/manual/html/index.html
@@ -17,3 +23,4 @@ Other resources:
 	* Introduction to Linux Intel Assembly Language: http://heather.cs.ucdavis.edu/~matloff/50/LinuxAssembly.html
 	* x86-64 Assembly Language Programming with Ubuntu: http://www.egr.unlv.edu/~ed/assembly64.pdf
 	* Reverse Engineering for Beginners(Understanding Assembly Language): https://beginners.re/RE4B-EN.pdf
+	* https://microprocessors414.files.wordpress.com/2015/01/program-control-instructions.pdf
