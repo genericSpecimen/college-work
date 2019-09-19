@@ -1,0 +1,21 @@
+mov ebx, 123	; ebx = 123
+mov eax, ebx	; eax = ebx
+add ebx, ecx	; ebx += ecx
+sub ebx, edx	; ebx -= edx
+
+mul and div are applied to eax
+mul ebx		; eax *= ebx
+div edx		; eax /= edx
+
+
+push 1234
+push 8765
+push 246
+
+
+sub esp, 4		---|
+mov [esp], dword 357	---| same as push 357
+
+
+mov eax, dword [esp]	---|
+add esp, 4		---| same as pop eax
