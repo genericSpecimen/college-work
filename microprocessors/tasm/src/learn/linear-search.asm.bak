@@ -1,0 +1,61 @@
+.model small
+.stack 100h
+
+.data
+	arr		db 1, 2, 3, 4, 5
+	key 		db ?
+	msg		db 'Enter element to search: $'
+	foundmsg	db 13, 10, 'Found$'
+	notfoundmsg 	db 13, 10, 'not found$'
+	search		db 13, 10, 'Search key: $'
+	compared	db 13, 10, 'Compared: $'
+.code
+
+; procedure to print an ASCII value
+printnum proc
+
+	push bp
+	mov bp, sp
+
+	mov dl, [bp+4]
+	mov ah, 02h
+	int 21h
+
+	mov sp, bp
+	pop bp
+	ret
+
+printnum endp
+
+
+; procedure to print a string
+printstring proc
+
+	push bp
+	mov bp, sp
+
+	mov dx, [bp+4]
+	mov ah, 09h
+	int 21h
+
+	mov sp, bp
+	pop bp
+	ret
+
+printstring endp
+
+main PROC
+	mov bl, 1
+	mov al, 1
+	cmp bl, al
+	je YES
+
+	NO:
+		push offset notfoundmsg
+		call printstring
+	YES:
+		push offset foundmsg
+		call printstring
+	
+main endp
+end main
