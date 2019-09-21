@@ -2,7 +2,7 @@
 .stack 100h
 
 .data
-	arr		db 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+	arr		db 1, 2, 3, 4, 5
 	key 		db ?
 	msg		db 'Enter element to search: $'
 	foundmsg	db 13, 10, 'Found$'
@@ -76,7 +76,7 @@ main PROC
 	;----------------------------------
 	 
 	xor di, di	; set index to 0
-	mov cx, 10	; 10 elements in array
+	mov cx, 5	; 5 elements in array
 	mov al, key	; needed since read changed al 
 	SEARCHLOOP:
 		mov bl, arr[di]	; copy array element to bl
