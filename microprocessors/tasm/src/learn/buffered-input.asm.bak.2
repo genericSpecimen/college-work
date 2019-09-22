@@ -11,7 +11,41 @@
 	msg	db 'Value of bx: $'
 .code
 
-; ------------------------------------stoi-------------------------------------
+;printnum proc
+;
+;; AX = value to print
+;	mov cx, 0
+;	pushcycle: ; push numbers onto stack
+;		mov dx, 0
+;		cmp ax, 0
+;		je popcycle
+;
+;		mov bx, 10
+;		div bx
+;		push dx
+;		inc cx
+;		jmp pushcycle
+;		
+;
+;	popcycle:	; pop and output
+;		cmp cx, 0
+;		je exitfunc
+;
+;		pop dx
+;		add dx, 30h
+;		mov ah, 02h
+;		int 21h
+;
+;		loop popcycle
+;
+;	exitfunc:
+;		mov ah, 02h
+;		mov dl, 0
+;		int 21h
+;		ret 
+;	
+;printnum endp
+	
 stoi proc
 ; converts string to integer and puts it in bx
 
@@ -45,13 +79,13 @@ stoi proc
 
 		dec si		; next digit
 		loop CONVERT_CHAR
+
 	ret
+
 stoi endp
-; -----------------------------------------------------------------------------
 
-
-; ------------------------------------writedollars-----------------------------
 writedollars proc
+
 	mov si, offset string
 	mov cx, 8
 	dollars:
@@ -60,11 +94,9 @@ writedollars proc
 		inc si
 		loop dollars
 	ret
+
 writedollars endp
-; -----------------------------------------------------------------------------
 
-
-; -------------------------------------itos------------------------------------
 itos proc
 ; convert integer in ax to string
 	call writedollars
@@ -98,8 +130,6 @@ itos proc
 		int 21h
 		ret
 itos endp
-; -----------------------------------------------------------------------------
-
 
 printcrlf proc
 	mov ah, 09h
@@ -107,13 +137,6 @@ printcrlf proc
 	int 21h
 	ret
 printcrlf endp
-
-printstr proc
-	; requires dx : offset of string
-	mov ah, 09h
-	int 21h
-	ret
-printstr endp
 
 main proc
 	mov ax, @data
@@ -134,11 +157,13 @@ main proc
 	mov ax, bx
 	call itos
 
+	mov ah, 09h
 	mov dx, offset msg
-	call printstr
+	int 21h
 
+	mov ah, 09h
 	mov dx, offset string
-	call printstr
+	int 21h
 
 	mov ax, 4c00h
 	int 21h

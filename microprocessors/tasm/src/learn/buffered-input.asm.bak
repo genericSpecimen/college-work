@@ -1,0 +1,150 @@
+.model small
+.stack 100h
+
+.data
+	crlf	db 13, 10, '$'
+	bksp	db 8, '$'
+	string	db 6	; max number of characters allowed
+		db ?	; number of characters entered by user
+		db 6 dup (?)	; characters entered by user
+		db '$'
+	num	dw ?
+	msg	db 13, 10, 'Value of bx:', 13, 10, '$'
+.code
+
+printnum proc
+
+; AX = value to print
+	mov cx, 0
+	pushcycle: ; push numbers onto stack
+		mov dx, 0
+		cmp ax, 0
+		je popcycle
+
+		mov bx, 10
+		div bx
+		push dx
+		inc cx
+		jmp pushcycle
+		
+
+	popcycle:	; pop and output
+		cmp cx, 0
+		je exitfunc
+
+		pop dx
+		add dx, 30h
+		mov ah, 02h
+		int 21h
+
+		loop popcycle
+
+	exitfunc:
+		mov ah, 02h
+		mov dl, 0
+		int 21h
+		ret 
+	
+printnum endp
+	
+
+
+;number2string proc
+;	mov cx, 0
+;	pushcycle1: ; push numbers onto stack
+;		mov dx, 0
+;		cmp ax, 0
+;		je retrieve
+;
+;		mov bx, 10
+;		div bx
+;		push dx
+;		inc cx
+;		jmp pushcycle1
+;		
+;	retrieve:
+;		mov si, offset string
+;	popcycle1:	; pop and output
+;		cmp cx, 0
+;		je exitfunc1
+;
+;		pop dx
+;		add dl, 30h
+;		mov [si], dl
+;		inc si
+;		loop popcycle1
+;
+;	exitfunc1:
+;		mov ah, 02h
+;		mov dl, 0
+;		int 21h
+;		ret 
+;	
+;number2string endp
+
+string2number proc
+
+	inc si
+	mov cl, [si]	; num of chars entered
+	mov ch, 0	; cx == cl
+	add si, cx	; make si point to LSD
+
+	mov bx, 0	; stores the result
+	mov bp, 1	; multiply by (1, 10, 100, ...)
+	CONVERT_CHAR:
+		mov al, [si]	; character to process
+		sub al, 30h	; al - '0'
+		mov ah, 0	; ax == al
+		mul bp		; ax = ax*bp
+		add bx, ax	; add result
+
+		mov ax, bp
+		mov bp, 10
+		mul bp		; multiply current weight by 10
+		mov bp, ax	; new weight
+
+		dec si		; next digit
+		loop CONVERT_CHAR
+
+	ret
+
+string2number endp
+
+main proc
+	mov ax, @data
+	mov ds, ax
+
+	mov ah, 0ah
+	mov dx, offset string
+	int 21h
+
+
+	mov ah, 09h
+	mov dx, offset crlf
+	int 21h
+
+
+;	mov si, offset string
+;	mov cx, 6
+;	six_dollars:
+;		mov bl, '$'
+;		mov [si], bl
+;		inc si
+;		loop six_dollars
+
+	
+	mov si, offset string
+	call string2number
+	
+	mov ah, 09h
+	mov dx, offset msg
+	int 21h
+
+	mov ax, bx
+	call printnum
+
+	mov ax, 4c00h
+	int 21h
+main endp
+end main
+
