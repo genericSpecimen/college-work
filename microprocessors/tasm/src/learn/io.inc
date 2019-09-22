@@ -3,12 +3,10 @@
 
 .data
 	crlf	db 13, 10, '$'
-	string	db 6	; max number of characters allowed
+	buffstr	db 6	; max number of characters allowed
 		db ?	; number of characters entered by user
 		db 6 dup (?)	; characters entered by user
 		db '$'
-	num	dw ?
-	msg	db 'Value of bx: $'
 .code
 
 ; ------------------------------------stoi-------------------------------------
@@ -16,6 +14,9 @@ stoi proc
 ; converts string to integer and puts it in bx
 
 ; si points to the start of string (buffer input)
+; call example:
+;	mov si, offset buffstr
+;	call stoi
 
 ; Format of DOS input buffer:
 ; Offset  Size    Description     (Table 01344)
@@ -52,7 +53,7 @@ stoi endp
 
 ; ------------------------------------writedollars-----------------------------
 writedollars proc
-	mov si, offset string
+	mov si, offset buffstr
 	mov cx, 8
 	dollars:
 		mov bl, '$'
@@ -81,7 +82,7 @@ itos proc
 		jmp pushcycle1
 		
 	retrieve:
-		mov si, offset string
+		mov si, offset buffstr
 	popcycle1:	; pop and output
 		cmp cx, 0
 		je exitfunc1
@@ -101,6 +102,27 @@ itos endp
 ; -----------------------------------------------------------------------------
 
 
+input proc
+	; take buffered input
+	mov ah, 0ah
+	mov dx, offset buffstr
+	int 21h
+
+	; convert input string to number and store it in bx
+	mov si, offset buffstr
+	call stoi
+
+	; result is in bx
+	ret
+input endp
+
+output proc
+	call itos
+	mov dx, offset buffstr
+	call printstr
+	ret
+output endp
+
 printcrlf proc
 	mov ah, 09h
 	mov dx, offset crlf
@@ -114,34 +136,4 @@ printstr proc
 	int 21h
 	ret
 printstr endp
-
-main proc
-	mov ax, @data
-	mov ds, ax
-
-	; buffered input
-	mov ah, 0ah
-	mov dx, offset string
-	int 21h
-
-	call printcrlf
-	
-	; convert string to number, result is in bx
-	mov si, offset string
-	call stoi
-	
-	; convert number in ax to string
-	mov ax, bx
-	call itos
-
-	mov dx, offset msg
-	call printstr
-
-	mov dx, offset string
-	call printstr
-
-	mov ax, 4c00h
-	int 21h
-main endp
-end main
 
