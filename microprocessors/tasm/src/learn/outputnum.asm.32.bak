@@ -1,0 +1,94 @@
+.model small
+.386
+.stack 100h
+
+.data
+	num1 dd 1234
+	num2 dd 9998
+	buffstr db 10 dup('$')
+	crlf	db 13, 10, '$'
+.code
+
+printstr proc
+	push eax		; save current value of eax since ah gets modified
+
+	mov ah, 09h
+	; needs offset of string in dx
+	int 21h
+
+	pop eax	; restore previous value of eax
+	ret
+printstr endp
+
+itos proc
+	; converts value of eax to a string
+	; algo:
+	;	1. push each digit (starting from LSD) onto stack by dividing by 10 and pushing the remainder
+	;	2. pop each digit, add 30h, and store it in string
+
+	; -------- saving register values -------
+	push ebx
+	push ecx
+	push edx
+	; ---------------------------------------
+
+	mov ecx, 0	; keep track of number of digits pushed onto stack, used during pop cycle
+	pushi:	; push each digit onto stack
+		mov edx, 0	; required for division
+		cmp eax, 0	; if eax is zero, then we are done pushing
+		je retrieve
+
+		mov ebx, 10	; divide by 10
+		div ebx
+
+		push edx	; remainder is in dx
+		inc ecx
+		jmp pushi
+
+	retrieve:
+		mov si, offset buffstr	; output string is to be stored in buffstr
+	popi:	; pop each digit and store it in buffstr
+		cmp ecx, 0	; if no digits pushed
+		je writezero	; then write 0, and exit
+
+		pop edx		; pop into edx
+		add dl, 30h	; convert to ASCII
+		mov [si], dl	; write at string index si
+		inc si
+		loop popi	; loop until cx == 0
+
+	jmp exititos	; don't write zero if we are here
+
+	writezero:
+		mov dl, 30h
+		mov [si], dl
+
+	exititos:
+	
+	; ------- restore register values --------
+	pop edx
+	pop ecx
+	pop ebx
+	; -----------------------------------------
+	ret
+itos endp
+
+main proc
+	mov ax, @data
+	mov ds, ax
+
+	mov eax, num1
+	add eax, num2
+	call itos	; converts eax to string which is stored in buffstr
+
+	mov dx, offset buffstr
+	call printstr	
+
+	mov dx, offset crlf
+	call printstr	
+
+	mov ax, 4c00h
+	int 21h
+main endp
+end main
+

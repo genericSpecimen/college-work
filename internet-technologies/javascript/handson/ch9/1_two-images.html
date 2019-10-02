@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>onMouseOver and onMouseOut</title>
+        <script>
+            function pic1() {
+                const img = document.getElementById('img');
+                img.src = "1.jpg";
+            }
+            function pic2() {
+                const img = document.getElementById('img');
+                img.src = "2.jpg";
+            }
+        </script>
+    </head>
+    <body>
+        <h3>Move your mouse pointer over the picture to change the picture</h3>
+        <img id="img" height="600" width="400" src="1.jpg" onmouseover="pic2()" onmouseout="pic1()">
+    </body>
+</html>
