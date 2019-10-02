@@ -1,0 +1,44 @@
+<html>
+    <title>Static password protection</title>
+    <head>
+        <script>
+            function verify() {
+                const uinput = document.getElementById('username');
+                const pinput = document.getElementById('password');
+                const successMsg = document.getElementById('successMsg');
+                const failureMsg = document.getElementById('failureMsg');
+
+                const username = "admin";
+                const password = "password";
+
+                if(uinput.value == "") {
+                    failureMsg.textContent = "Username can't be empty";
+                    return false;
+                } else if(uinput.value !== username) {
+                    failureMsg.textContent = "Username is incorrect";
+                    return false;
+                }
+
+                if(pinput.value === "") {
+                    failureMsg.textContent = "Password can't be empty";
+                    return false;
+                } else if(pinput.value !== password) {
+                    failureMsg.textContent = "Password is incorrect";
+                    return false;
+                }
+                successMsg.textContent = "Successful authentication";
+                alert("Welcome, " + username);
+                return true;
+            }
+        </script>
+    </head>
+    <body>
+        <form method="POST" onsubmit="return verify();">
+            Enter username: <input type="text" name="username" id="username"> <br>
+            Enter password: <input type="password" name="password" id="password"> <br>
+            <input type="submit" name="submit" value="Submit">
+        </form>
+        <div id="successMsg" style="color: green"></div>
+        <div id="failureMsg" style="color: crimson"></div>
+    </body>
+</html>
