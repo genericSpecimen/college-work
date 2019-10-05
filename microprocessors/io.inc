@@ -7,7 +7,7 @@
 			db 6 dup (?)	; characters entered by user
 			db '$'
 
-	bufferout db 6 dup('$')
+	bufferout db 7 dup('$')
 .code
 
 printstr proc
@@ -35,6 +35,17 @@ itos proc
 	push si
 	; ---------------------------------------
 
+	mov si, offset bufferout	; output string is to be stored in bufferout
+
+	; --- test if number is negative or not ---
+	test ax, ax
+	jns POSITIVE
+	mov byte ptr [si], '-'	; display minus if negative 
+	inc si
+	neg ax	; make it positive
+	POSITIVE:
+	;------------------------------------------
+
 	mov cx, 0	; keep track of number of digits pushed onto stack, used during pop cycle
 	pushi:	; push each digit onto stack
 		mov dx, 0	; required for division
@@ -48,7 +59,6 @@ itos proc
 		jmp pushi
 
 	retrieve:
-		mov si, offset bufferout	; output string is to be stored in bufferout
 	popi:	; pop each digit and store it in bufferout
 
 		pop dx		; pop into dx
