@@ -2,32 +2,91 @@
 .stack 100h
 
 .data
-	crlf	db 13, 10, '$'
-	buffstr	db 6	; max number of characters allowed
-		db ?	; number of characters entered by user
-		db 6 dup (?)	; characters entered by user
-		db '$'
-	numbx	dw ?
-	numcx	dw ?
+	bufferin	db 6	; max number of characters allowed
+			db ?	; number of characters entered by user
+			db 6 dup (?)	; characters entered by user
+			db '$'
+
+	bufferout db 6 dup('$')
 .code
 
-; ------------------------------------stoi-------------------------------------
+printstr proc
+	push ax		; save current value of ax since ah gets modified
+
+	mov ah, 09h
+	; needs offset of string in dx
+	int 21h
+
+	pop ax	; restore previous value of ax
+	ret
+printstr endp
+
+itos proc
+	; itos: integer to string
+	; converts value of ax to a string
+	; algo:
+	;	1. push each digit (starting from LSD) onto stack by dividing by 10 and pushing the remainder
+	;	2. pop each digit, add 30h, and store it in string
+
+	; -------- saving register values -------
+	push bx
+	push cx
+	push dx
+	push si
+	; ---------------------------------------
+
+	mov cx, 0	; keep track of number of digits pushed onto stack, used during pop cycle
+	pushi:	; push each digit onto stack
+		mov dx, 0	; required for division
+		mov bx, 10	; divide by 10
+		div bx
+
+		push dx	; remainder is in dx
+		inc cx
+		cmp ax, 0	; if ax is zero, then we are done pushing (or ax was zero to begin with)
+		je retrieve
+		jmp pushi
+
+	retrieve:
+		mov si, offset bufferout	; output string is to be stored in bufferout
+	popi:	; pop each digit and store it in bufferout
+
+		pop dx		; pop into dx
+		add dl, 30h	; convert to ASCII
+		mov [si], dl	; write at string index si
+		inc si
+		loop popi	; loop until cx == 0
+
+	exititos:
+		mov byte ptr [si], '$'	; so that contents of previous string are not included
+	; ------- restore register values --------
+	pop si
+	pop dx
+	pop cx
+	pop bx
+	; -----------------------------------------
+	ret
+itos endp
+
 stoi proc
-; converts string to integer and puts it in bx
+	; stoi: string to integer
+	; converts string in buffinput to an integer which will be stored in ax
 
-; si points to the start of string (buffer input)
-; call example:
-;	mov si, offset buffstr
-;	call stoi
+	;------- save register values -------
+	push ax
+	push cx
+	push dx
 
-; Format of DOS input buffer:
-; Offset  Size    Description     (Table 01344)
-; 00h    BYTE    maximum characters buffer can hold
-; 01h    BYTE    (call) number of chars from last input which may be recalled
-; (ret) number of characters actually read, excluding CR
-; 02h  N BYTEs   actual characters read, including the final carriage return
+	; Format of DOS input buffer:
+	; Offset  Size    Description     (Table 01344)
+	; 00h    BYTE    maximum characters buffer can hold
+	; 01h    BYTE    (call) number of chars from last input which may be recalled
+	; (ret) number of characters actually read, excluding CR
+	; 02h  N BYTEs   actual characters read, including the final carriage return
 
-	inc si
+	mov si, offset bufferin
+	inc si		; point to number of characters entered
+	
 	mov cl, [si]	; num of chars entered
 	mov ch, 0	; make cx == cl
 	add si, cx	; make si point to LSD
@@ -35,9 +94,11 @@ stoi proc
 	mov bx, 0	; stores the result
 	mov bp, 1	; multiply by (1, 10, 100, ...)
 	CONVERT_CHAR:
+
 		mov al, [si]	; character to process
 		sub al, 30h	; al - '0'
 		mov ah, 0	; make ax == al
+
 		mul bp		; ax = ax*bp
 		add bx, ax	; add result
 
@@ -48,98 +109,21 @@ stoi proc
 
 		dec si		; next digit
 		loop CONVERT_CHAR
+	pop dx
+	pop cx
+	pop ax
 	ret
 stoi endp
-; -----------------------------------------------------------------------------
 
-
-; ------------------------------------writedollars-----------------------------
-writedollars proc
-	mov si, offset buffstr
-	mov cx, 8
+clearbuffer proc
+	mov si, offset bufferin
+	mov byte ptr [si], 6
+	inc si
+	mov cx, 7
 	dollars:
-		mov bl, '$'
-		mov [si],  bl
+		mov byte ptr [si], '$'
 		inc si
 		loop dollars
 	ret
-writedollars endp
-; -----------------------------------------------------------------------------
-
-
-; -------------------------------------itos------------------------------------
-itos proc
-; convert integer in ax to string
-	mov numcx, cx
-	mov numbx, bx
-	call writedollars
-	mov cx, 0
-	pushcycle1: ; push numbers onto stack
-		mov dx, 0
-		cmp ax, 0
-		je retrieve
-
-		mov bx, 10
-		div bx
-		push dx
-		inc cx
-		jmp pushcycle1
-		
-	retrieve:
-		mov si, offset buffstr
-	popcycle1:	; pop and output
-		cmp cx, 0
-		je exitfunc1
-
-		pop dx
-		add dl, 30h
-		mov [si], dl
-		inc si
-		loop popcycle1
-
-	exitfunc1:
-		mov ah, 02h
-		mov dl, 0
-		int 21h
-		mov cx, numcx
-		mov bx, numbx
-		ret
-itos endp
-; -----------------------------------------------------------------------------
-
-
-input proc
-	; take buffered input
-	mov ah, 0ah
-	mov dx, offset buffstr
-	int 21h
-
-	; convert input string to number and store it in bx
-	mov si, offset buffstr
-	call stoi
-
-	; result is in bx
-	ret
-input endp
-
-output proc
-	call itos
-	mov dx, offset buffstr
-	call printstr
-	ret
-output endp
-
-printcrlf proc
-	mov ah, 09h
-	mov dx, offset crlf
-	int 21h
-	ret
-printcrlf endp
-
-printstr proc
-	; requires dx : offset of string
-	mov ah, 09h
-	int 21h
-	ret
-printstr endp
+clearbuffer endp
 
