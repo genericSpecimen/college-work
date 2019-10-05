@@ -5,8 +5,8 @@ include io.inc
 
 .data
 	ARRSIZE equ 10
-	arr1	dw 10, 20, 30, 78, 90, 12, 13, 10, 9, 60
-	arr2	dw 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+	arr2	dw 10, 20, 30, 78, 90, 12, 13, 10, 9, 60
+	arr1	dw 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 	arr3	dw 10 dup(?)	; stores the addition
 	arr4	dw 10 dup(?)	; stores the subtraction
 	msg1	db 13, 10, 'First array: $'
