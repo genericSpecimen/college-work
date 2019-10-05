@@ -4,7 +4,8 @@
 include io.inc
 
 .data
-	arr		dw 2, 11, 33, 48, 51
+	ARRSIZE		equ 10
+	arr		dw 2, 11, 33, 48, 51, 69, 89, 100, 112, 267
 	key 		dw ?
 	arrmsg		db 13, 10, 'The array is: $'
 	msg		db 13, 10, 'Enter element to search: $'
@@ -24,7 +25,7 @@ printarr proc
 	;---------------------
 
 	mov si, 0
-	mov cx, 5
+	mov cx, ARRSIZE
 	printloop:
 
 		mov ax, arr[si]
@@ -60,7 +61,10 @@ binarysearch proc
 
 	mov ax, key	; key to be searched
 	mov bx, 0	; low index
-	mov cx, 8	; high index (4*2 = 8), word sized data
+	; high index = (ARRSIZE - 1) * 2
+	mov cx, ARRSIZE
+	dec cx
+	shl cx, 1
 
 	;-------------------------------------
 	BSLOOP:
