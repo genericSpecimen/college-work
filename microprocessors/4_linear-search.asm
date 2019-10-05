@@ -4,7 +4,8 @@
 include io.inc
 
 .data
-	arr		dw 11, 2, 33, 48, 51
+	ARRSIZE		equ 10
+	arr		dw 11, 2, 33, 48, 51, 100, 267, 89, 112, 69
 	key 		dw ?
 	arrmsg		db 13, 10, 'The array is: $'
 	msg		db 13, 10, 'Enter element to search: $'
@@ -13,6 +14,7 @@ include io.inc
 	notfoundmsg 	db 13, 10, '=> Not found$'
 	crlf		db 13, 10, '$'
 	commaspace	db ', $'
+
 .code
 
 printarr proc
@@ -24,7 +26,7 @@ printarr proc
 	;---------------------
 	
 	mov si, 0
-	mov cx, 5
+	mov cx, ARRSIZE
 	printloop:
 
 		mov ax, arr[si]
@@ -57,9 +59,9 @@ linearsearch proc
 	; ----------------------
 
 
-	mov si, 0	; set index to 0
-	mov cx, 5	; 5 elements in array
-	mov ax, key	; needed since read changed al 
+	mov si, 0	; starting index of search is 0
+	mov cx, ARRSIZE	; number of elements in array
+	mov ax, key	; store key in ax 
 	LSLOOP:
 		mov bx, arr[si]	; copy array element to bx
 		cmp bx, ax
