@@ -20,7 +20,7 @@ main proc
 	mov ax, 65535
 
 	mov cx, 0
-	mov bx, 1
+	mov bx, 2
 
 	add ax, bx
 	adc dx, cx

@@ -63,12 +63,12 @@ itos proc
 	jmp exititos	; don't write zero if we are here
 
 	writezeros:
-		mov cx, 4	; write four 0s in case we are dealing with 32 bit addition
-		zero:
+		;mov cx, 4	; write four 0s in case we are dealing with 32 bit addition
+		;zero:
 			mov dl, 30h
 			mov [si], dl
 			inc si
-			loop zero
+		;	loop zero
 
 	exititos:
 		mov byte ptr [si], '$'	; so that contents of previous string are not included
