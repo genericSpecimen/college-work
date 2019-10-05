@@ -8,14 +8,21 @@ include io.inc
 	key 		dw ?
 	arrmsg		db 13, 10, 'The array is: $'
 	msg		db 13, 10, 'Enter element to search: $'
-	search		db 13, 10, 'Searching for: $'
-	foundmsg	db 13, 10, 'Found at index $'
-	notfoundmsg 	db 13, 10, 'not found$'
+	search		db 13, 10, '=> Searching for: $'
+	foundmsg	db 13, 10, '=> Found at index $'
+	notfoundmsg 	db 13, 10, '=> Not found$'
 	crlf		db 13, 10, '$'
 	commaspace	db ', $'
 .code
 
 printarr proc
+	; -- save registers --
+	push si
+	push cx
+	push ax
+	push dx
+	;---------------------
+	
 	mov si, 0
 	mov cx, 5
 	printloop:
@@ -31,8 +38,59 @@ printarr proc
 		inc si
 		inc si
 		loop printloop
+	; -- restore registers --
+	pop dx
+	pop ax
+	pop cx
+	pop si
+	; -----------------------
 	ret
 printarr endp
+
+linearsearch proc 
+	; --- save registers ---
+	push si
+	push cx
+	push ax
+	push bx
+	push dx
+	; ----------------------
+
+
+	mov si, 0	; set index to 0
+	mov cx, 5	; 5 elements in array
+	mov ax, key	; needed since read changed al 
+	LSLOOP:
+		mov bx, arr[si]	; copy array element to bx
+		cmp bx, ax
+		je LSFOUND
+		inc si
+		inc si
+		loop LSLOOP
+
+	LSNOTFOUND:
+		mov dx, offset notfoundmsg
+		call printstr
+		jmp LSEXIT
+	LSFOUND:
+		mov dx, offset foundmsg
+		call printstr
+		mov ah, 02h
+		shr si, 1
+		mov dx, si
+		add dl, 30h
+		int 21h
+
+	LSEXIT:
+	; --- restore contents of registers ---
+	pop dx
+	pop bx
+	pop ax
+	pop cx
+	pop si
+	; -------------------------------------
+	ret
+linearsearch endp
 
 main PROC
 	mov ax, @data
@@ -65,32 +123,11 @@ main PROC
 	mov dx, offset bufferout
 	call printstr
 	;----------------------------------
-	 
-	mov si, 0	; set index to 0
-	mov cx, 5	; 5 elements in array
-	mov ax, key	; needed since read changed al 
-	SEARCHLOOP:
-		mov bx, arr[si]	; copy array element to bx
-		cmp bx, ax
-		je FOUND
-		inc si
-		inc si
-		loop SEARCHLOOP
+	
+	call linearsearch
 
-	NOTFOUND:
-		mov dx, offset notfoundmsg
-		call printstr
-		jmp EXIT
-	FOUND:
-		mov dx, offset foundmsg
-		call printstr
-		mov ah, 02h
-		shr si, 1
-		mov dx, si
-		add dl, 30h
-		int 21h
-
-	EXIT:	mov ax, 4c00h
+	EXIT:
+		mov ax, 4c00h
 		int 21h
 main endp
 end main

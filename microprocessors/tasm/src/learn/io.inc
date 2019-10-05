@@ -52,7 +52,7 @@ itos proc
 		mov si, offset bufferout	; output string is to be stored in bufferout
 	popi:	; pop each digit and store it in bufferout
 		cmp cx, 0	; if no digits pushed
-		je writezero	; then write 0, and exit
+		je writezeros	; then write 0, and exit
 
 		pop dx		; pop into dx
 		add dl, 30h	; convert to ASCII
@@ -62,10 +62,13 @@ itos proc
 
 	jmp exititos	; don't write zero if we are here
 
-	writezero:
-		mov dl, 30h
-		mov [si], dl
-		inc si
+	writezeros:
+		mov cx, 4	; write four 0s in case we are dealing with 32 bit addition
+		zero:
+			mov dl, 30h
+			mov [si], dl
+			inc si
+			loop zero
 
 	exititos:
 		mov byte ptr [si], '$'	; so that contents of previous string are not included
