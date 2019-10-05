@@ -57,7 +57,7 @@ sort proc
 			cmp di, arrsize
 			je innerdone
 
-			mov ax, arr[di]
+			mov dx, offset cmpdbg1
 			mov ax, arr[di+2]
 			inc di
 			jmp innerloop
