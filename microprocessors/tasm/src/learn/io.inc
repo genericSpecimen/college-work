@@ -82,6 +82,7 @@ readhex proc
 	pop ecx
 	pop eax
 	; -----------------------
+	call clearbuffer
 	ret
 readhex endp
 
@@ -256,6 +257,7 @@ stoi proc
 	pop cx
 	pop ax
 	; -----------------------
+	call clearbuffer
 	ret
 stoi endp
 
