@@ -1,13 +1,15 @@
 .model small
+.386
 .stack 100h
 
 .data
-	BUFFSIZE	equ 7	; reserve one space for '-' as well in case number is negative
+	BUFFSIZE	equ 10
 	bufferin	db BUFFSIZE		; max number of characters allowed (including return)
 			db ?			; number of characters entered by user
 			db BUFFSIZE dup (?)	; characters entered by user
 			db '$'
 	negflag		db 0			; denotes whether number is negative (0 = +ve, 1 = -ve)
+	badip		db 13, 10, 'You must enter 8 digits! $'
 	bufferout db BUFFSIZE dup('$')
 .code
 
@@ -21,6 +23,105 @@ printstr proc
 	pop ax	; restore previous value of ax
 	ret
 printstr endp
+
+readhex proc
+	; converts the string in bufferin to a number in ebx
+
+	; -- save registers --
+	push eax
+	push ecx
+	push edx
+	push esi
+	
+	;---------------------
+	mov ebx, 0	; result will be stored in ebx
+
+	mov ah, 0Ah
+	mov dx, offset bufferin
+	int 21h
+
+	mov si, offset bufferin
+	inc si
+	mov cl, [si]	; number of characters entered
+	cmp cl, 8	; must be 8
+	jne BADINPUT
+
+	inc si		; point to first character entered
+	READLOOP:
+		mov eax, 0
+		mov al, [si]
+		cmp al, '9'
+		jbe conv2	; if 0-9
+		cmp al, 'a'
+		jb conv1	; jump if below, i.e. if al == A-F
+		sub al, 20h	; otherwise characters are a-f, so subtract 20h to make them A-F
+
+		conv1:
+			sub al, 7h
+		conv2:
+			sub al, 30h
+
+		add ebx, eax	; add to ebx
+		rol ebx, 4	; move least significant nibble to most significant nibble
+		inc si
+		loop READLOOP
+	ror ebx, 4	; undo last rotate, since we only had to rotate 7 times, but the loop ran for 8 iterations
+
+	jmp EXITREADHEX
+
+	BADINPUT:
+		mov dx, offset badip
+		call printstr
+		mov ax, 4c00h
+		int 21h
+
+	EXITREADHEX:
+	; -- restore registers --
+	pop esi
+	pop edx
+	pop ecx
+	pop eax
+	; -----------------------
+	ret
+readhex endp
+
+printhex proc
+	; prints the number in eax in hexadecimal
+	; -- save registers --
+	push di
+	push cx
+	push bx
+	; --------------------
+	mov di, offset bufferout
+	mov cx, 8	; 8 hex digits
+
+	P1:
+		rol eax, 4	; rotate (left) the most significant nibble
+		mov bl, al	; store the nibble in bl
+		and bl, 0Fh	; only low nibble needed
+		add bl, 30h
+
+		cmp bl, 39h	; compare bl with 39h ('9')
+		jna P2
+		add bl, 7h	; 39h + 7h = 41h ('A')
+
+	P2:
+		mov [di], bl
+		inc di
+		dec cl
+		jnz P1
+
+	mov dx, offset bufferout
+	call printstr
+
+	; -- restore registers --
+	pop bx
+	pop cx
+	pop di
+	; -----------------------
+
+	ret
+printhex endp
 
 itos proc
 	; itos: integer to string
