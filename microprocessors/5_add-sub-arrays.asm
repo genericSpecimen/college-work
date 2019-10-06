@@ -9,6 +9,7 @@ include io.inc
 	arr2	dw 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 	arr3	dw 10 dup(?)	; stores the addition
 	arr4	dw 10 dup(?)	; stores the subtraction
+	msg0	db 13, 10, '**** Addition and Subtraction of two arrays **** $'
 	msg1	db 13, 10, 'First array: $'
 	msg2	db 13, 10, 'Second array: $'
 	msg3	db 13, 10, 'Addition: $'
@@ -104,6 +105,9 @@ main proc
 
 	mov ax, @data
 	mov ds, ax
+
+	mov dx, offset msg0
+	call printstr
 
 	mov dx, offset msg1
 	call printstr

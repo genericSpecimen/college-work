@@ -2,6 +2,7 @@
 .stack 100h
 
 .data
+	msg0	db 13, 10, '**** Binary to ASCII conversion ****$'
 	note	db 13, 10, 'Note: any character other than 0 will be treated as 1 $'
 	binmsg	db 13, 10, 'Enter a binary number (8 bits): $'
 	ascmsg	db 13, 10, 'ASCII character: $'
@@ -15,6 +16,10 @@ main proc
 
 	mov ax, @data
 	mov ds, ax
+
+	mov dx, offset msg0
+	mov ah, 09h
+	int 21h
 
 	; ---- take binary number input ----
 	mov ah, 09h
