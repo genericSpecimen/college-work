@@ -7,8 +7,9 @@ include io.inc
 	ARRSIZE		equ 10
 	arr		dw 11, 2, 33, 48, 51, 100, 267, 89, 112, 69
 	key 		dw ?
+	msg0		db 13, 10, '**** Linear search **** $'
 	arrmsg		db 13, 10, 'The array is: $'
-	msg		db 13, 10, 'Enter element to search: $'
+	msg1		db 13, 10, 'Enter element to search: $'
 	search		db 13, 10, '=> Searching for: $'
 	foundmsg	db 13, 10, '=> Found at index $'
 	notfoundmsg 	db 13, 10, '=> Not found$'
@@ -98,12 +99,15 @@ main PROC
 	mov ax, @data
 	mov ds, ax
 
+	mov dx, offset msg0
+	call printstr
+
 	mov dx, offset arrmsg
 	call printstr
 	call printarr
 
 	;----take input of search key --
-	mov dx, offset msg
+	mov dx, offset msg1
 	call printstr
 
 	mov ah, 0ah

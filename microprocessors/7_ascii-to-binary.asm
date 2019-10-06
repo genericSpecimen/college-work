@@ -2,6 +2,7 @@
 .stack 100h
 
 .data
+	msg0	db 13, 10, '**** ASCII to Binary conversion ****$'
 	ascmsg	db 13, 10, 'Enter an ASCII character: $'
 	binmsg	db 13, 10, 'ASCII character in binary: $'
 	binary	db 8 dup('0'), '$'	; an ASCII character takes up 8 bits
@@ -11,6 +12,10 @@ main proc
 
 	mov ax, @data
 	mov ds, ax
+
+	mov dx, offset msg0
+	mov ah, 09h
+	int 21h
 
 	; ---- take ASCII char input ----
 	mov ah, 09h

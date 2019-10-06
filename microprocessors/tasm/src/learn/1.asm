@@ -6,7 +6,6 @@ include io.inc
 
 .data
 
-	msg0		db 13, 10, '**** 32 bit binary addition, subtraction, division, multiplication ****$'
 	msg1		db 13, 10, 'Enter first  hex number (8 digits)  : $'
 	msg2		db 13, 10, 'Enter second hex number (8 digits)  : $'
 	msg3		db 13, 10, 'Addition       (num1 + num2): $'
@@ -25,9 +24,6 @@ main proc
 
 	mov ax, @data
 	mov ds, ax
-
-	mov dx, offset msg0
-	call printstr
 
 	; -- take input first number --
 	mov dx, offset msg1

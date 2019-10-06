@@ -4,6 +4,7 @@
 include io.inc 
 
 .data
+	msg		db 13, 10, '**** Sorting an array using Bubble Sort **** $'
 	ARRSIZE 	equ 10
 	arr		dw 23, 67, 1, 2, 90, 11, 21, 89, 100, 0
 	original	db 13, 10, 'Original array: $'
@@ -134,6 +135,9 @@ sort endp
 main proc
 	mov ax, @data
 	mov ds, ax
+
+	mov dx, offset msg
+	call printstr
 
 	; -- print original array ---
 	mov dx, offset original
