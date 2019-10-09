@@ -17,9 +17,10 @@
 lines	: lines expr '\n'		{ printf("%g\n", $2); }
      	| lines '\n'
 	| /* empty */
+	| error '\n' { yyerror("reenter previous line: "); yyerrok; }
 	;
 
-expr	: expr '+' expr	{ $$ = $1 + $3; }
+expr	: expr '+' expr	{ printf("e -> e+e\n"); $$ = $1 + $3; }
      	| expr '-' expr	{ $$ = $1 - $3; }
      	| expr '*' expr	{ $$ = $1 * $3; }
      	| expr '/' expr	{ $$ = $1 / $3; }

@@ -14,7 +14,7 @@
 
 %%
 
-lines	: lines expr '\n'		{ printf("Valid expression! It's value is: %g\n", $2); }
+lines	: lines expr '\n'		{ printf("=> Value: %g\n", $2); }
      	| lines '\n'
 	| /* empty */
 	| error '\n' { yyerror("Invalid expression, please check and reenter"); yyerrok; }
@@ -43,7 +43,8 @@ yylex() {
 }
 
 main() {
-	printf("Enter an expression to check whether it is valid or not: \n");
+	printf("*** Simple calculator ***\n");
+	printf("Enter an expression to compute it's value: \n");
 	yyparse();
 }
 
