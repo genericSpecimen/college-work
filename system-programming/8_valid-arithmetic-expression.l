@@ -7,8 +7,11 @@ OPERATOR	[+-/*%]
 OPERAND		[0-9]+
 
 %%
-[\t\n]		{}
-{OPERAND}({OPERATOR}{OPERAND})+	{ printf("valid\n");}
+
+[\n]		{}
+[ \t]*{OPERAND}[ \t]*({OPERATOR}[ \t]*{OPERAND}[ \t]*)+	{ printf("Valid\n");}
+.+	{ printf("Not valid\n"); }
+
 %%
 
 int main(int argc, char *argv[]) {
