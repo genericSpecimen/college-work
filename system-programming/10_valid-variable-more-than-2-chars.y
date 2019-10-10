@@ -27,6 +27,7 @@ alnum	: LCASELETTER alnum
 	| LCASELETTER
 	| UCASELETTER
 	| DIGIT
+	;
 
 %%
 
