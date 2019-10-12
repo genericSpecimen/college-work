@@ -1463,3 +1463,4 @@ main() {
 	printf("Enter a string to see if it belongs to this language: \n");
 	yyparse();
 }
+

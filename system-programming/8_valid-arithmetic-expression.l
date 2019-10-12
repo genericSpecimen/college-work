@@ -9,7 +9,7 @@ OPERAND		[0-9]+
 %%
 
 [\n]		{}
-[ \t]*{OPERAND}[ \t]*({OPERATOR}[ \t]*{OPERAND}[ \t]*)+	{ printf("Valid\n");}
+[ \t]*{OPERAND}[ \t]*({OPERATOR}[ \t]*{OPERAND}[ \t]*)*	{ printf("Valid\n");}
 .+	{ printf("Not valid\n"); }
 
 %%

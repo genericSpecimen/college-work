@@ -17,6 +17,7 @@
 			// printf("%s is the current longest\n", longest);
 		}
 	}
+.|\n
 %%
 
 int main(void) {

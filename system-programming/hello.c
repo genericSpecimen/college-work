@@ -1,10 +1,4 @@
 #include <stdio.h>
-void computewithspace          (int v1, int v2) {
-	printf("wow with space\n");
-}
-void compute(int test1, int test2) {
-	printf("wow\n");
-}
 
 int main(void) {
 	int a = 10;
