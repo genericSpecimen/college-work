@@ -1,14 +1,13 @@
 <html>
     <body>
-        <form>
 		<label for="userinput">Enter some text to convert it to uppercase</label>
-		<input id="userinput" type="text" onchange="makeUpper()"><br>
-        </form>
+        <input id="userinput" type="text" onchange="makeUpper()"><br>
+        <h4>Text in uppercase: </h4>
+        <div id="upper"></div>
         <script>
             function makeUpper() {
                 var input = document.getElementById('userinput').value;
-                console.log(input);
-                document.write(input.toUpperCase());
+                document.getElementById('upper').innerHTML = input.toUpperCase();
             }
         </script>
     </body>
