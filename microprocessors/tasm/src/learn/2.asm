@@ -2,6 +2,7 @@
 .386
 .stack 100h
 
+
 .data
 
 	BUFFSIZE	equ 10
@@ -12,19 +13,14 @@
 	badip		db 13, 10, 'You must enter 8 digits! $'
 	bufferout db BUFFSIZE dup('$')
 
-	msg0		db 13, 10, '**** 32 bit binary addition, subtraction, division, multiplication ****$'
-	msg1		db 13, 10, 'Enter first  hex number (8 digits)  : $'
-	msg2		db 13, 10, 'Enter second hex number (8 digits)  : $'
-	msg3		db 13, 10, 'Addition       (num1 + num2): $'
-	msg4		db 13, 10, 'Subtraction    (num1 - num2): $'
-	msg5		db 13, 10, 'Multiplication (num1 * num2): $'
-	msg6		db 13, 10, 'Division       (num1 / num2): $'
-	msg7		db 13, 10, '	Quotient : $'
-	msg8		db 13, 10, '	Remainder: $'
-	crlf		db 13, 10, '$'
+	num1 dd ?
+	num2 dd ?
+	msg0 db 13, 10, '**** 32 bit BCD Addition and Subtraction ****$'
+	msg1 db 13, 10, 'Enter first  8 digit decimal number: $'
+	msg2 db 13, 10, 'Enter second 8 digit decimal number: $'
+	msg3 db 13, 10, 'BCD Addition    (num1 + num2)  : $'
+	msg4 db 13, 10, 'BCD Subtraction (num2 - num1)  : $'
 
-	num1		dd ?
-	num2		dd ?
 .code
 
 printstr proc
@@ -62,7 +58,7 @@ clearbuffer proc
 	ret
 clearbuffer endp
 
-readhex proc
+readdecimal proc
 	; converts the string in bufferin to a number in ebx
 
 	; -- save registers --
@@ -88,16 +84,7 @@ readhex proc
 	READLOOP:
 		mov eax, 0
 		mov al, [si]
-		cmp al, '9'
-		jbe conv2	; if 0-9
-		cmp al, 'a'
-		jb conv1	; jump if below, i.e. if al == A-F
-		sub al, 20h	; otherwise characters are a-f, so subtract 20h to make them A-F
-
-		conv1:
-			sub al, 7h
-		conv2:
-			sub al, 30h
+		sub al, 30h ; subtract '0'
 
 		add ebx, eax	; add to ebx
 		rol ebx, 4	; move least significant nibble to most significant nibble
@@ -105,7 +92,7 @@ readhex proc
 		loop READLOOP
 	ror ebx, 4	; undo last rotate, since we only had to rotate 7 times, but the loop ran for 8 iterations
 
-	jmp EXITREADHEX
+	jmp EXITREADDECIMAL
 
 	BADINPUT:
 		mov dx, offset badip
@@ -113,7 +100,7 @@ readhex proc
 		mov ax, 4c00h
 		int 21h
 
-	EXITREADHEX:
+	EXITREADDECIMAL:
 	; -- restore registers --
 	pop esi
 	pop edx
@@ -122,9 +109,9 @@ readhex proc
 	; -----------------------
 	call clearbuffer
 	ret
-readhex endp
+readdecimal endp
 
-printhex proc
+printdecimal proc
 	; prints the number in eax in hexadecimal
 	; -- save registers --
 	push di
@@ -140,11 +127,6 @@ printhex proc
 		and bl, 0Fh	; only low nibble needed
 		add bl, 30h
 
-		cmp bl, 39h	; compare bl with 39h ('9')
-		jna P2
-		add bl, 7h	; 39h + 7h = 41h ('A')
-
-	P2:
 		mov [di], bl
 		inc di
 		dec cl
@@ -160,7 +142,7 @@ printhex proc
 	; -----------------------
 
 	ret
-printhex endp	
+printdecimal endp
 
 main proc
 
@@ -170,82 +152,124 @@ main proc
 	mov dx, offset msg0
 	call printstr
 
-	; -- take input first number --
+	; --input first number--
 	mov dx, offset msg1
 	call printstr
 
-	call readhex	; readhex will store the number read in ebx
-	mov num1, ebx	; store in num1
-	; -----------------------------
+	call readdecimal
+	mov num1, ebx
+	;-----------------------	
 
 
-	; -- take input second number --
+	; --input second number--
 	mov dx, offset msg2
 	call printstr
 
-	call readhex
-	mov num2, ebx	; store in num2
-	;-------------------------------
+	call readdecimal
+	mov num2, ebx
+	;-----------------------	
+
+	mov ecx, 0
+	mov edx, num1
+	mov ebx, num2
+
+	;------------------------- 32 bit BCD addition -------------------
+
+	; because the DAA instruction functions only with the Al register, this addition must occur 8 bits at a time
+
+	; first add bl and dl
+	mov al, bl
+	add al, dl
+	daa
+	mov cl, al
+
+	; now add bh and dh
+	mov al, bh
+	adc al, dh
+	daa
+	mov ch, al
 
 
-	; --- print addition of numbers ----
+	pushf	; push flags since rol instruction affects the carry flag
+
+	; now we need to add the high word, so we rotate the numbers by 16 bits to get high word values into low word
+	rol edx, 16
+	rol ebx, 16
+	rol ecx, 16
+	
+	popf
+
+	; again add bl and dl
+	mov al, bl
+	adc al, dl
+	daa
+	mov cl, al
+
+	; now add bh and dh
+	mov al, bh
+	adc al, dh
+	daa
+	mov ch, al
+
+	ror ecx, 16
+
 	mov dx, offset msg3
 	call printstr
 
-	mov eax, num1
-	add eax, num2
-	call printhex
-	;-----------------------------------
+	mov eax, ecx
+	call printdecimal
+	;--------------------------------------------------------------------
 
-	; --- print subtraction of numbers ----
+
+	;------------------------- 32 bit BCD subtraction -------------------
+	mov edx, num1
+	mov ebx, num2
+
+	
+	; first subtract dl from bl
+	mov al, bl
+	sub al, dl
+	das
+	mov cl, al
+
+	; now subtract dh from bh
+	mov al, bh
+	sbb al, dh
+	das
+	mov ch, al
+
+	pushf
+	; now we need to subtract the high word, so we rotate the numbers by 16 bits to get high word values into low word
+	rol edx, 16
+	rol ebx, 16
+	rol ecx, 16
+	popf
+
+	; again subtract dl from bl
+	mov al, bl
+	sbb al, dl
+	das
+	mov cl, al
+
+	; now subtract dh from bh
+	mov al, bh
+	sbb al, dh
+	das
+	mov ch, al
+
+	ror ecx, 16
+
 	mov dx, offset msg4
 	call printstr
 
-	mov eax, num1
-	sub eax, num2
-	call printhex
-	;--------------------------------------
-	
-	; --- print multiplication of numbers ----
-	mov dx, offset msg5
-	call printstr
+	mov eax, ecx
+	call printdecimal
 
-	mov eax, num1
-	mul num2	; 64 bit result in EDX-EAX
-	push eax	; save eax
+	;--------------------------------------------------------------------
 
-	mov eax, edx
-	call printhex	; print EDX
+	mov ax, 4c00h
+	int 21h
 
-	pop eax		; restore eax
-	call printhex	; print EAX
-	;--------------------------------------
-	
-	; --- print division of numbers ----
-	mov dx, offset msg6
-	call printstr
-
-	mov edx, 0
-	mov eax, num1	; 64 bit contents of EDX-EAX are divided by 32 bit operand specified by div instruction
-	div num2
-	push edx
-
-	mov dx, offset msg7
-	call printstr
-
-	call printhex ; 32 bit quotient is in eax, print it
-
-	mov dx, offset msg8
-	call printstr
-
-	pop edx
-	mov eax, edx	; 32 bit remainder is in edx
-	call printhex
-	;--------------------------------------
-	
-
-	EXIT:
-		mov ax, 4c00h
-		int 21h
 main endp
 end main
+
