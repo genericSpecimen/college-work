@@ -1,0 +1,71 @@
+CREATE DATABASE StudentResults
+
+CREATE TABLE Students (rollno CHAR(4) PRIMARY KEY, name VARCHAR(30));
+
+INSERT into Students VALUES("4001", "Aman"),("4002", "Boman"),("4003", "Chandan"),("4004", "Danish"),("4005", "Erin"),("4006", "Felix"),("4007", "Gaurav"),("4008", "Hrithik"),("4009", "Inaam"), ("4010", "Joy");
+
+CREATE TABLE Results (rollno CHAR(4),
+                      maths INT,
+                      physics INT,
+                      chemistry INT,
+                      computer_science INT, total_marks INT,
+                      FOREIGN KEY(rollno) REFERENCES Students(rollno));
+
+INSERT into Results VALUES("4001", 2, 66, 95, 48, 211),("4002", 91, 6, 33, 39, 169),("4003", 78, 33, 80, 58, 249),("4004", 38, 89, 88, 43, 258),("4005", 55, 51, 47, 51, 204),("4006", 76, 49, 59, 93, 277),("4007", 57, 80, 13, 99, 249),("4008", 37, 87, 27, 43, 194),("4009", 23, 91, 76, 20, 210), ("4010", 8, 1, 28, 85, 122);
+
+a)	SELECT COUNT(*) AS num_students FROM Students;
+b) 	SELECT AVG(maths) FROM Results;
+	SELECT AVG(physics) FROM Results;
+	SELECT AVG(chemistry) FROM Results;
+	SELECT AVG(computer_science) FROM Results;
+
+
+c) SELECT
+	Students.name
+FROM
+	Students INNER JOIN Results ON Students.rollno = Results.rollno
+WHERE
+	total_marks = (SELECT MAX(total_marks) FROM Results);
+
+d) SELECT (Results.total_marks/400 * 100) FROM Results;
+
+now inside java pgm, check %ages
+60-100 first div
+50-59 second div
+40-49 third div
+
+e)
+ SELECT Students.name
+FROM Results INNER JOIN Students ON Results.rollno = Students.rollno
+WHERE Results.maths = (SELECT MAX(maths) FROM Results);
+
+SELECT Students.name
+FROM Results INNER JOIN Students ON Results.rollno = Students.rollno
+WHERE Results.physics = (SELECT MAX(physics) FROM Results);
+
+SELECT Students.name
+FROM Results INNER JOIN Students ON Results.rollno = Students.rollno
+WHERE Results.chemistry = (SELECT MAX(chemistry) FROM Results);
+
+SELECT Students.name
+FROM Results INNER JOIN Students ON Results.rollno = Students.rollno
+WHERE Results.computer_science = (SELECT MAX(computer_science) FROM Results);
+
+f) SELECT AVG(Results.total_marks) AS AvgMarks FROM Results;
+
+g) SELECT Students.name
+FROM Results INNER JOIN Students ON Results.rollno = Students.rollno
+WHERE Results.total_marks = (
+	SELECT MAX(total_marks)
+	FROM Results
+	WHERE total_marks <> (SELECT MAX(total_marks) FROM Results)
+);
+
+
+2)
+delimiter // 
+create procedure countRows(OUT numRows INT) begin set numRows = (SELECT COUNT(*) FROM Students); end//
+delimiter ;
+call countRows(@numRows);
+SELECT @numRows;
+
