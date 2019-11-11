@@ -6,10 +6,10 @@ include io.inc	; printstr, stoi, itos
 .data
 	num1 dw ?
 	num2 dw ?
-	msg1 db 13, 10, 'Enter first number: $'
-	msg2 db 13, 10, 'Enter second number: $'
+	msg1 db 13, 10, 'Enter first number (num1): $'
+	msg2 db 13, 10, 'Enter second number (num2): $'
 	crlf	db 13, 10, '$'
-	submsg db 13, 10, 'Difference of numbers: $'
+	submsg db 13, 10, 'Difference (num1 - num2): $'
 .code
 
 main proc
