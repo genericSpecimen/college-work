@@ -1,0 +1,1 @@
+javac -cp "/usr/share/tomcat7/lib/servlet-api.jar:/usr/share/tomcat7/lib/jsp-api.jar:." file.java
