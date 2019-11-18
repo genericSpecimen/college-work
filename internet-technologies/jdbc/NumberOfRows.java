@@ -16,7 +16,7 @@ public class NumberOfRows {
 
 		try {
 			// request Connection to database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/StudentResults", "<username>", "<password>");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/StudentResults", "root", "TDIN2f2f");
 			
 			CallableStatement cstmt = conn.prepareCall("{ call countRows(?)}");
 			cstmt.registerOutParameter(1, Types.INTEGER);
