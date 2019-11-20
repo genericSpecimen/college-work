@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 3
+#define YY_END_OF_BUFFER 4
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,28 +363,27 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[17] =
+static const flex_int16_t yy_accept[8] =
     {   0,
-        0,    0,    5,    3,    3,    1,    2,    3,    3,    2,
-        2,    3,    3,    2,    2,    0
+        0,    0,    4,    3,    1,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    4,    1,    1,    1,
-        1,    4,    4,    4,    4,    4,    4,    5,    5,    5,
-        5,    5,    5,    5,    5,    5,    5,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    2,    2,    2,    2,    2,    2,
+        2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
+        2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
+        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -401,35 +400,29 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[6] =
+static const YY_CHAR yy_meta[4] =
     {   0,
-        1,    1,    2,    1,    1
+        1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[18] =
+static const flex_int16_t yy_base[8] =
     {   0,
-        0,    0,   14,    0,    4,   20,    8,    0,    0,    0,
-        6,   11,    0,   15,    3,   20,    6
+        0,    0,    4,    5,    5,    5,    5
     } ;
 
-static const flex_int16_t yy_def[18] =
+static const flex_int16_t yy_def[8] =
     {   0,
-       16,    1,   16,   17,   17,   16,    5,   17,    5,    7,
-        7,    5,   12,   12,   14,    0,   16
+        7,    1,    7,    7,    7,    7,    0
     } ;
 
-static const flex_int16_t yy_nxt[26] =
+static const flex_int16_t yy_nxt[9] =
     {   0,
-        4,    5,    6,    4,    7,    9,    8,    8,   10,   11,
-        8,   12,   13,   16,   16,   14,   15,   16,   12,    3,
-       16,   16,   16,   16,   16
+        4,    5,    6,    7,    3,    7,    7,    7
     } ;
 
-static const flex_int16_t yy_chk[26] =
+static const flex_int16_t yy_chk[9] =
     {   0,
-        1,    1,    1,    1,    1,    5,   17,   15,    5,    7,
-       11,    7,   12,    3,    0,   12,   14,    0,   14,   16,
-       16,   16,   16,   16,   16
+        1,    1,    1,    3,    7,    7,    7,    7
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -446,11 +439,11 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "8_valid-arithmetic-expression.l"
-#line 2 "8_valid-arithmetic-expression.l"
+#line 1 "2_caesar-cipher.l"
+#line 2 "2_caesar-cipher.l"
 	#include <stdio.h>
-#line 452 "lex.yy.c"
-#line 453 "lex.yy.c"
+#line 445 "lex.yy.c"
+#line 446 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -667,10 +660,9 @@ YY_DECL
 		}
 
 	{
-#line 9 "8_valid-arithmetic-expression.l"
+#line 7 "2_caesar-cipher.l"
 
-
-#line 673 "lex.yy.c"
+#line 665 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -697,13 +689,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 17 )
+				if ( yy_current_state >= 8 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 20 );
+		while ( yy_base[yy_current_state] != 5 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -728,27 +720,29 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 11 "8_valid-arithmetic-expression.l"
-{}
+#line 8 "2_caesar-cipher.l"
+{
+		char ch = yytext[0];
+		ch = ((ch - 'A' + 3) % 26) + 'A';
+		printf ("%c", ch);
+	}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "8_valid-arithmetic-expression.l"
-{ printf("Valid\n");}
+#line 13 "2_caesar-cipher.l"
+{
+		char ch = yytext[0];
+		ch = ((ch - 'a' + 3) % 26) + 'a';
+		printf ("%c", ch);
+	}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 13 "8_valid-arithmetic-expression.l"
-{ printf("Not valid\n"); }
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 15 "8_valid-arithmetic-expression.l"
+#line 20 "2_caesar-cipher.l"
 ECHO;
 	YY_BREAK
-#line 751 "lex.yy.c"
+#line 745 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1045,7 +1039,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 17 )
+			if ( yy_current_state >= 8 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1073,11 +1067,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 17 )
+		if ( yy_current_state >= 8 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 16);
+	yy_is_jam = (yy_current_state == 7);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1753,10 +1747,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 15 "8_valid-arithmetic-expression.l"
+#line 20 "2_caesar-cipher.l"
 
 
-int main(int argc, char *argv[]) {
+int main(void) {
 	yylex();
 	return 0;
 }
