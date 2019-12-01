@@ -11,11 +11,11 @@ public class SubstringTag extends SimpleTagSupport {
     public void setInput(String input) {
         this.input = input;
     }
-    public void setStart(String start) throws IOException, NumberFormatException {
+    public void setStart(String start) throws NumberFormatException {
         this.start = start;
         a = Integer.parseInt(start);
     }
-    public void setEnd(String end) throws IOException, NumberFormatException {
+    public void setEnd(String end) throws NumberFormatException {
         this.end = end;
         b = Integer.parseInt(end);
     }
