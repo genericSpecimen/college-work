@@ -6,7 +6,7 @@ def check_age(f):
     # row[0] is age, row[1] is yearsmarried
     age_conditions = lambda row : row[0] in range(0,151) and row[0] > row[1]
     result = f[['age', 'yearsmarried']].apply(age_conditions, axis = 1) 
-    f['passes_resultset'] &= result
+    f['passes_ruleset'] &= result
     print(result)
 
 def agegroup_conditions(row):
@@ -25,7 +25,7 @@ def check_agegroup(f):
     # apply the function to each row
     result = f[['age', 'agegroup']].apply(agegroup_conditions, axis = 1)
     print(result)
-    f['passes_resultset'] &= result
+    f['passes_ruleset'] &= result
 
 def check_height(f):
     pass
@@ -34,7 +34,7 @@ def check_status(f):
     status_condition = lambda s : s in ["single", "married", "widowed"]
     result = f['status'].apply(status_condition) 
     print(result)
-    f['passes_resultset'] &= result
+    f['passes_ruleset'] &= result
 
 
 def check_yearsmarried(f):
@@ -48,9 +48,9 @@ print(f"=> Data read from '{data_file}':\n", f, "\n")
 # Initially, we assume all records pass the resultset. If during checking we find out a record has
 # failed a check, then we set it to False.
 #
-passes_resultset = [True for i in range(f.shape[0])]
+passes_ruleset = [True for i in range(f.shape[0])]
 # add this column to the end of data frame f
-f['passes_resultset'] = passes_resultset
+f['passes_ruleset'] = passes_ruleset
 
 ruleset = {
     'age': check_age,
@@ -77,7 +77,7 @@ f.plot(title = 'Original set of records')
 plt.show()
 
 # plot only the records which pass the ruleset conditions.
-rf = f[f['passes_resultset'] == True]
+rf = f[f['passes_ruleset'] == True]
 rf.plot(title = 'Set of records after applying the ruleset')
 plt.show()
 
