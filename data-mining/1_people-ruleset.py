@@ -45,7 +45,7 @@ f = pd.read_csv(data_file)
 print(f"=> Data read from '{data_file}':\n", f, "\n")
 
 # Create a summary column that will keep track of which records have passed / failed ruleset checks.
-# Initially, we assume all records pass the resultset. If during checking we find out a record has
+# Initially, we assume all records pass the ruleset. If during checking we find out a record has
 # failed a check, then we set it to False.
 #
 passes_ruleset = [True for i in range(f.shape[0])]
