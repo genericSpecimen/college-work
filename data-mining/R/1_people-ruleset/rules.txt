@@ -1,0 +1,8 @@
+age > 0
+age <= 150
+age > yearsmarried
+status %in% c("married", "widowed", "single")
+if(age < 18) agegroup == "child"
+if(age >= 18 && age <= 65) agegroup == "adult"
+if(age >= 65) agegroup == "elderly"
+

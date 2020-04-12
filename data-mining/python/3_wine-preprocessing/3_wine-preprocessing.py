@@ -34,5 +34,4 @@ print(np.mean(standardized_X), "\n")
 print("=> Standard deviation of each column:")
 print(np.std(standardized_X))
 print("----------------------------------------------")
-print(standardized_X)
 
