@@ -4,8 +4,8 @@ X <- iris[, -5]
 y <- iris[, 5]
 
 k = 4
-#kNNdistplot(X, k)
-#abline(h = 0.45, col="green")
+kNNdistplot(X, k)
+abline(h = 0.45, col="green")
 
 eps = 0.45
 

@@ -1,5 +1,6 @@
 library(caret) # train, confusionMatrix
 library(klaR)
+library(class)
 
 # train-test split
 set.seed(10)
