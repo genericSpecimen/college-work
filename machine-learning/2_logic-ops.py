@@ -11,7 +11,7 @@ print(f"{a} AND {b}: {a and b}")
 print(f"{a} == {b} : {a == b}")
 
 # NOT
-print(f"not {a}    : not a")
+print(f"not {a}    : {not a}")
 
 # XOR
 print(f"{a} XOR {b}: {a ^ b}")

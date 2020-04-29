@@ -17,7 +17,7 @@ print("Subtraction of a and b:\n", d, "\n")
 # multiplication of matrices uses the '@' operator
 # the * operator performs element wise multiplication
 b = b.reshape(3,2)
-print("Reshaped b to shape {b.shape}:\n", b, "\n")
+print(f"Reshaped b to shape {b.shape}:\n", b, "\n")
 e = a @ b
 print("Matrix multiplication of a and b :\n", e, "\n")
 
@@ -27,5 +27,5 @@ print("Row 0 of matrix a:", "\n", row_0)
 
 # display column 1 of matrix b
 column_1 = b[:, 1]
-print("Column 1 of matrix b: ", "\n", column_2)
+print("Column 1 of matrix b: ", "\n", column_1)
 

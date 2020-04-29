@@ -29,5 +29,5 @@ print(accuracy_score(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 
 target_names = ["setosa", "versicolor", "virginica"]
-print(classification_report(y_test, y_pred, target_names=class_labels))
+print(classification_report(y_test, y_pred, target_names=target_names))
 
