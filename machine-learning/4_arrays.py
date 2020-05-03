@@ -33,7 +33,8 @@ print(z, "\n")
 
 
 rg = np.random.default_rng(1)
-random_array = rg.random((2, 3))
+# range is [10,100)
+random_array = rg.uniform(10, 100, (2, 3))
 print(f"Random array of shape {random_array.shape}: ")
 print(random_array, "\n")
 
