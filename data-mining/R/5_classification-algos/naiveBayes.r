@@ -38,7 +38,7 @@ cat(sprintf(" => NB 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall['Accuracy']
 accuracies <- c()
 i <- 1
 for(j in 50:80) {
-	s <- sample(m, j)
+	s <- sample.int(n = m, size = floor((j/100)*m), replace = FALSE)
 	iris_train <- iris[s,]
 	iris_test <- iris[-s,]
 	model <- naiveBayes(Species ~ ., data = iris_train)

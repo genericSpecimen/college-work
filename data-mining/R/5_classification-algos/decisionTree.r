@@ -41,7 +41,7 @@ cat(sprintf(" => Decision tree 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall[
 accuracies <- c()
 i <- 1
 for(j in 50:80) {
-	sample <- sample.int(n = m, size = floor((2/3)*m), replace = FALSE)
+	sample <- sample.int(n = m, size = floor((j/100)*m), replace = FALSE)
 	iris_train <- iris[sample,]
 	iris_test <- iris[-sample,]
 	model <- rpart(Species ~ ., data = iris_train, method = "class")
