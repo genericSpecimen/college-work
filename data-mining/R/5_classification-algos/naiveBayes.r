@@ -1,75 +1,80 @@
-library(e1071) # naiveBayes
-library(caret) # train, confusionMatrix
-library(klaR) # method="nb" in train
-# train-test split
+library(caret)
 
-set.seed(10)
-m = nrow(iris)
+# standardization
+iris[, -5] <- scale(iris[, -5])
 
-# 75-25 split
-sample <- sample.int(n = m, size = floor(0.75*m), replace = FALSE)
-iris_train <- iris[sample,]
-iris_test <- iris[-sample,]
 
-model <- naiveBayes(Species ~ ., data = iris_train)
+# ------------------------------ Holdout method ---------------------------
+
+# 75 - 25 split
+
+# p = %age of data that goes into training;
+# list=FALSE results should be in a matrix instead of list
+train_idx <- createDataPartition(y = iris$Species, p = 0.75, list = FALSE) 
+iris_train <- iris[train_idx, ]
+iris_test <- iris[-train_idx, ]
+
+# attributes X
+X = iris_train[, -5]
+# class labels y (species)
+y = iris_train[, 5]
+
+# use the Naive Bayes method
+model <- train(X, y, method='nb')
+# predict the output for test data
 pred <- predict(model, iris_test)
-xtab <- table(pred, iris_test$Species)
-cm <- confusionMatrix(xtab)
-cat(sprintf(" => NB 75-25 split; accuracy: %f\n", cm$overall['Accuracy']))
-
+cm <- confusionMatrix(pred, iris_test$Species)
+cat(sprintf(" => Naive Bayes method using 75-25 split; accuracy: %f\n", cm$overall['Accuracy']))
 
 # 2/3rd - 1/3rd split
-sample <- sample.int(n = m, size = floor((2/3)*m), replace = FALSE)
-iris_train <- iris[sample,]
-iris_test <- iris[-sample,]
 
-model <- naiveBayes(Species ~ ., data = iris_train)
+train_idx <- createDataPartition(y = iris$Species, p = 0.67, list = FALSE) 
+iris_train <- iris[train_idx, ]
+iris_test <- iris[-train_idx, ]
+
+X = iris_train[, -5]
+y = iris_train[, 5]
+
+model <- train(X, y, method='nb')
 pred <- predict(model, iris_test)
-xtab <- table(pred, iris_test$Species)
-cm <- confusionMatrix(xtab)
+cm <- confusionMatrix(pred, iris_test$Species)
 
-cat(sprintf(" => NB 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall['Accuracy']))
-
-# holdout method is the same as above
+cat(sprintf(" => Naive Bayes method using 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall['Accuracy']))
+# -------------------------------------------------------------------------
 
 
-# random subsampling (repeated holdout method)
-# training set size varies from 50% to 80%
-accuracies <- c()
-i <- 1
-for(j in 50:80) {
-	s <- sample.int(n = m, size = floor((j/100)*m), replace = FALSE)
-	iris_train <- iris[s,]
-	iris_test <- iris[-s,]
-	model <- naiveBayes(Species ~ ., data = iris_train)
-	pred <- predict(model, iris_test)
-	xtab <- table(pred, iris_test$Species)
-	cm <- confusionMatrix(xtab)
-	accuracies[i] <- cm$overall['Accuracy']
-	i = i + 1
-}
-
-cat(sprintf(" => NB using random subsampling; mean accuracy: %f\n", mean(accuracies)))
 
 
-# k-fold cross validation
 
-set.seed(123)
-ctrl = trainControl(method = "cv", number = 10)
 
-model <- train(Species ~ ., data = iris, method = "nb", trControl = ctrl)
-cat(sprintf(" => NB using 10-fold CV accuracy: %f\n", max(model$results$Accuracy)))
+#--------------------- Random subsampling - Monte Carlo CV ------------------
+X = iris[, -5]
+y = iris[, 5]
 
-# standardized data
-iris[,-5] <- scale(iris[,-5])
-sample <- sample.int(n = m, size = floor(0.75*m), replace = FALSE)
-iris_train <- iris[sample,]
-iris_test <- iris[-sample,]
+# repeatedly take random 75% of data as training set
+trCtrl = trainControl(method = 'LGOCV', p = 0.75)
+model <- train(X, y, method='nb', trControl = trCtrl)
+cat(sprintf(" => Naive Bayes method using random subsampling, p = 0.75; max accuracy: %f\n", max(model$results$Accuracy)))
 
-model <- naiveBayes(Species ~ ., data = iris_train)
-pred <- predict(model, iris_test)
-xtab <- table(pred, iris_test$Species)
-cm <- confusionMatrix(xtab)
-cat(sprintf(" => NB 75-25 split; standardized; accuracy: %f\n", cm$overall['Accuracy']))
+# repeatedly take random 67% of data as training set
+trCtrl = trainControl(method = 'LGOCV', p = 0.67)
+model <- train(X, y, method='nb', trControl = trCtrl)
+cat(sprintf(" => Naive Bayes method using random subsampling, p = 0.67; max accuracy: %f\n", max(model$results$Accuracy)))
+#----------------------------------------------------------------------------
+
+
+
+
+
+
+#------------------------ k-fold Cross Validation ---------------------------
+X = iris[, -5]
+y = iris[, 5]
+
+# 10-fold cross validation
+trCtrl = trainControl(method = 'cv', number = 10)
+model <- train(X, y, method='nb', trControl = trCtrl)
+cat(sprintf(" => Naive Bayes method using 10-fold CV; accuracy: %f\n", max(model$results$Accuracy)))
+#----------------------------------------------------------------------------
 
 

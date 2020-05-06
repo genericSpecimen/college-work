@@ -1,16 +1,21 @@
 library(dbscan)
+library(factoextra)
 
-X <- iris[, -5]
-y <- iris[, 5]
+data('multishapes')
 
+X <- multishapes[, -3]
+
+# to determine eps, we plot the sorted distances of
+# 4th nearest neighbor of each point and look for the "knee"
+# we select eps = value corresponding to the knee
 k = 4
 kNNdistplot(X, k)
-abline(h = 0.45, col="green")
 
-eps = 0.45
+# we see it's near 0.16
+abline(h = 0.16, col = 'green')
 
-db = dbscan(X, eps, minPts=k)
-print(db)
+db <- dbscan(X, eps = 0.16, minPts = k+1)
 
-hullplot(X, db, main="DBSCAN")
+# visualize the resulting clusters (only points)
+fviz_cluster(db, data = X, geom = 'point')
 

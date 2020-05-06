@@ -1,83 +1,80 @@
-library(caret) # train, confusionMatrix
-library(klaR)
-library(class)
+library(caret)
 
-# train-test split
-set.seed(10)
-m = nrow(iris)
+# standardization
+iris[, -5] <- scale(iris[, -5])
 
-X = iris[,-5]
-y = iris[,5]
 
-# 75-25 split
-sample <- sample.int(n = m, size = floor(0.75*m), replace = FALSE)
-X_train <- X[sample, ]
-X_test <- X[-sample,]
-y_train <- y[sample]
-y_test <- y[-sample]
-pred <- knn(X_train, X_test, cl=y_train, k=10)
+# ------------------------------ Holdout method ---------------------------
 
-xtab <- table(pred, y_test)
-cm <- confusionMatrix(xtab)
-cat(sprintf(" => knn 75-25 split; accuracy: %f\n", cm$overall['Accuracy']))
+# 75 - 25 split
+
+# p = %age of data that goes into training;
+# list=FALSE results should be in a matrix instead of list
+train_idx <- createDataPartition(y = iris$Species, p = 0.75, list = FALSE) 
+iris_train <- iris[train_idx, ]
+iris_test <- iris[-train_idx, ]
+
+# attributes X
+X = iris_train[, -5]
+# class labels y (species)
+y = iris_train[, 5]
+
+# use the k-nearest neighbors method
+model <- train(X, y, method='knn')
+# predict the output for test data
+pred <- predict(model, iris_test)
+cm <- confusionMatrix(pred, iris_test$Species)
+cat(sprintf(" => k-nearest neighbors method using 75-25 split; accuracy: %f\n", cm$overall['Accuracy']))
 
 # 2/3rd - 1/3rd split
-sample <- sample.int(n = m, size = floor((2/3)*m), replace = FALSE)
-X_train <- X[sample, ]
-X_test <- X[-sample,]
-y_train <- y[sample]
-y_test <- y[-sample]
-pred <- knn(X_train, X_test, cl=y_train, k=10)
 
-xtab <- table(pred, y_test)
-cm <- confusionMatrix(xtab)
+train_idx <- createDataPartition(y = iris$Species, p = 0.67, list = FALSE) 
+iris_train <- iris[train_idx, ]
+iris_test <- iris[-train_idx, ]
 
-cat(sprintf(" => knn 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall['Accuracy']))
+X = iris_train[, -5]
+y = iris_train[, 5]
 
-# holdout method is the same as above
+model <- train(X, y, method='knn')
+pred <- predict(model, iris_test)
+cm <- confusionMatrix(pred, iris_test$Species)
 
-
-# random subsampling (repeated holdout method)
-# training set size varies from 50% to 80%
-accuracies <- c()
-i <- 1
-for(j in 50:80) {
-	sample <- sample.int(n = m, size = floor((j/100)*m), replace = FALSE)
-	X_train <- X[sample, ]
-	X_test <- X[-sample,]
-	y_train <- y[sample]
-	y_test <- y[-sample]
-	pred <- knn(X_train, X_test, cl=y_train, k=10)
-
-	xtab <- table(pred, y_test)
-	cm <- confusionMatrix(xtab)
-
-	accuracies[i] <- cm$overall['Accuracy']
-	i = i + 1
-}
-
-cat(sprintf(" => knn using random subsampling; mean accuracy: %f\n", mean(accuracies)))
+cat(sprintf(" => k-nearest neighbors method using 2/3rd - 1/3rd split; accuracy: %f\n", cm$overall['Accuracy']))
+# -------------------------------------------------------------------------
 
 
-# k-fold cross validation
 
-set.seed(123)
-ctrl = trainControl(method = "cv", number = 10)
 
-model <- train(Species ~ ., data = iris, method = "knn", trControl = ctrl)
-cat(sprintf(" => knn using 10-fold CV accuracy: %f\n", max(model$results$Accuracy)))
 
-# standardized data
-X = scale(X)
 
-sample <- sample.int(n = m, size = floor(0.75*m), replace = FALSE)
-X_train <- X[sample, ]
-X_test <- X[-sample,]
-y_train <- y[sample]
-y_test <- y[-sample]
-pred <- knn(X_train, X_test, cl=y_train, k=10)
+#--------------------- Random subsampling - Monte Carlo CV ------------------
+X = iris[, -5]
+y = iris[, 5]
 
-xtab <- table(pred, y_test)
-cm <- confusionMatrix(xtab)
-cat(sprintf(" => knn 75-25 split; standardized; accuracy: %f\n", cm$overall['Accuracy']))
+# repeatedly take random 75% of data as training set
+trCtrl = trainControl(method = 'LGOCV', p = 0.75)
+model <- train(X, y, method='knn', trControl = trCtrl)
+cat(sprintf(" => k-nearest neighbors method using random subsampling, p = 0.75; max accuracy: %f\n", max(model$results$Accuracy)))
+
+# repeatedly take random 67% of data as training set
+trCtrl = trainControl(method = 'LGOCV', p = 0.67)
+model <- train(X, y, method='knn', trControl = trCtrl)
+cat(sprintf(" => k-nearest neighbors method using random subsampling, p = 0.67; max accuracy: %f\n", max(model$results$Accuracy)))
+#----------------------------------------------------------------------------
+
+
+
+
+
+
+#------------------------ k-fold Cross Validation ---------------------------
+X = iris[, -5]
+y = iris[, 5]
+
+# 10-fold cross validation
+trCtrl = trainControl(method = 'cv', number = 10)
+model <- train(X, y, method='knn', trControl = trCtrl)
+cat(sprintf(" => k-nearest neighbors method using 10-fold CV; accuracy: %f\n", max(model$results$Accuracy)))
+#----------------------------------------------------------------------------
+
 
