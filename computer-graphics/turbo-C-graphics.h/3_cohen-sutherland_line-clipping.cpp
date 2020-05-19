@@ -9,10 +9,12 @@ const int RIGHT		= 2; // 0010
 const int BOTTOM	= 4; // 0100
 const int TOP		= 8; // 1000
 
-const int x_min = 40;
-const int x_max = 100;
-const int y_min = 10;
-const int y_max = 100;
+// clip rectangle
+
+const int x_min = 20;
+const int x_max = 250;
+const int y_min = 50;
+const int y_max = 250;
 
 int compute_outcode(double x, double y) {
 	int code = INSIDE;
@@ -37,7 +39,7 @@ int compute_outcode(double x, double y) {
 	return code;
 }
 
-void cohen_sutherland_clip(double x0, double y0, double x1, double y1) {
+void cohen_sutherland_clip(double x0, double y0, double x1, double y1, int color) {
 	/*
 	 * clip the line segment PQ where P = (x0, y0) and Q = (x1, y1)
 	 * against the clip rectangle as defined by x_min, x_max, y_min, y_max
@@ -46,6 +48,8 @@ void cohen_sutherland_clip(double x0, double y0, double x1, double y1) {
 	// region codes for P and Q
 	int oc0 = compute_outcode(x0, y0);
 	int oc1 = compute_outcode(x1, y1);
+
+	setcolor(color);
 
 	bool accept = false;
 
@@ -112,9 +116,6 @@ void cohen_sutherland_clip(double x0, double y0, double x1, double y1) {
 		}
 	}
 
-	// display clip rectangle
-	// left-top right-bottom
-	rectangle(x_min, y_min, x_max, y_max);
 	if(accept) {
 		std::cout << "Line from (" << x0 << ", " << y0 << ") to (" << x1 << ", " << y1 << ") has been accepted.\n";
 		// display the line
@@ -128,11 +129,32 @@ void cohen_sutherland_clip(double x0, double y0, double x1, double y1) {
 int main() {
 	int gd = DETECT, gm;
 	initgraph(&gd, &gm, NULL);
-	cohen_sutherland_clip(50, 50, 70, 70);
-	cohen_sutherland_clip(70, 90, 110, 40);
-	cohen_sutherland_clip(30, 15, 40, 110);
-	cohen_sutherland_clip(30, 10, 110, 110);
-	cohen_sutherland_clip(30, 0, 110, 110);
+	
+	// display clip rectangle
+	// left-top right-bottom
+	setcolor(GREEN); rectangle(x_min, y_min, x_max, y_max);
+
+	/*
+	// without clipping
+	setcolor(RED);		line(50, 10, 100, 40);
+	setcolor(WHITE);	line(70, 90, 110, 40);
+	setcolor(BLUE);		line(30, 15, 50, 300);
+	setcolor(YELLOW);	line(150, 10, 300, 110);
+	setcolor(MAGENTA);	line(30, 0, 110, 110);
+	setcolor(WHITE);	line(125, 300, 300, 200);
+	setcolor(CYAN);		line(0, 125, 300, 125);
+	*/
+
+	// /* 
+	// with clipping
+	cohen_sutherland_clip(50, 10, 100, 40, RED);
+	cohen_sutherland_clip(70, 90, 110, 40, WHITE);
+	cohen_sutherland_clip(30, 15, 50, 300, BLUE);
+	cohen_sutherland_clip(200, 10, 260, 110, YELLOW);
+	cohen_sutherland_clip(30, 0, 110, 110, MAGENTA);
+	cohen_sutherland_clip(125, 300, 300, 200, WHITE);
+	cohen_sutherland_clip(0, 125, 300, 125, CYAN);
+	// */
 	getch();
 	closegraph();
 	return 0;

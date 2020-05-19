@@ -3,7 +3,8 @@ delete_all(X, [], []) :- !.
 
 /*
  * if the head of the list is X, then don't add this to R.
- * Continue deleting occurences of X on the tail of the list.
+ * Continue deleting occurences of X in the tail of the list
+ * with a recursive call
  */
 delete_all(X, [X|T], R) :- delete_all(X, T, R), !.
 
