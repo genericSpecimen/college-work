@@ -1,0 +1,102 @@
+Scan conversion
+intersection calculation in clipping
+
+
+EXAMPLE 2.7
+------------------------
+tr = [1 0 0; 0 1 0; 0 -2 1]
+m = 1/2
+theta = -atand(m)
+rot2D = [cosd(theta) sind(theta) 0; -sind(theta) cosd(theta) 0; 0 0 1]
+refx = [1 0 0; 0 -1 0; 0 0 1]
+t = tr * rot * refx * inv(rot) * inv(tr)
+X = [2 4 1; 4 6 1; 2 6 1]
+X * t
+---------------------------
+
+theta = 30
+rot3Dz = [cosd(theta) sind(theta) 0 0; -sind(theta) cosd(theta) 0 0; 0 0 1 0; 0 0 0 1]
+
+
+EXAMPLE 3.14
+-------------------
+fz = 1/2
+
+phi = asind(fz/sqrt(2-(fz*fz)))
+rot3Dy = [cosd(phi) 0 -sind(phi) 0; 0 1 0 0; sind(phi) 0 cosd(phi) 0; 0 0 0 1]
+
+theta = asind(fz/sqrt(2))
+rot3Dx = [1 0 0 0; 0 cosd(theta) sind(theta) 0; 0 -sind(theta) cosd(theta) 0; 0 0 0 1]
+
+Pz = [1 0 0 0; 0 1 0 0; 0 0 0 0; 0 0 0 1]
+
+T = rot3Dy * rot3Dx * Pz
+
+Xnew = X * T
+--------------------
+
+single point perspective
+
+yc = -2
+q = -1/yc
+Py = [1 0 0 0; 0 1 0 q; 0 0 1 0; 0 0 0 1]
+
+X = [0 0 0 1; 5 0 0 1; 0 5 0 1]
+
+homo = X * Py
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------
+CURVES
+
+t = 0.1
+T = [t^3 t^2 t 1]
+G = [2 2 0; 3 4 0; 5 4 0; 7 5 0]
+
+
+HERMITE
+basis matrix:
+Mh = inv([0 0 0 1; 1 1 1 1; 0 0 1 0; 3 2 1 0])
+or
+Mh = [2 -2 1 1; -3 3 -2 -1; 0 0 1 0; 1 0 0 0]
+Q = T * Mh * G
+
+Relation between hermite geometry vector and Bezier geometry vector
+Mhb = [1 0 0 0; 0 0 0 1; -3 3 0 0; 0 0 -3 3]
+
+BEZIER
+Basis matrix:
+Mb = Mh * Mhb
+or
+Mb = [-1 3 -3 1; 3 -6 3 0; -3 3 0 0; 1 0 0 0]
+Q = T * Mb * G
+
+
+
+curve plotting
+
+x = 0;
+y = 0;
+step = 1/1000;
+for t = 0:step:1
+	T = [t^3 t^2 t 1];
+	Q = T * Mb * G;
+	x = [x Q(1)];
+	y = [y Q(2)];
+end
+
+x = x(:, 2:1000);
+y = y(:, 2:1000);
+plot(x, y)
+

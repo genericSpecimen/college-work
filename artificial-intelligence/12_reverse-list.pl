@@ -8,6 +8,7 @@ reverse(L, R) :- reverse(L, [], R).
 reverse([], A, A) :- !.
 
 /*
+ * Recursive case:
  * accumulate the head of the list to the head of accumulator A,
  * and recursively reverse the tail.
  * In effect, all the elements of the list will get accumulated
