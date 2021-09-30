@@ -1,0 +1,22 @@
+// Compilation:
+lex valid-expression.l && yacc valid-expression.y && gcc y.tab.c -ly
+
+// Running:
+./a.out
+
+Enter an expression to check whether it is valid or not: 
+26+35
+Valid expression! It's value is: 61
+23.4+34.5
+Valid expression! It's value is: 57.9
+-67*7
+Valid expression! It's value is: -469
+
+.
+syntax error
+Invalid expression, please check and reenter
+(23+3)/2+3
+Valid expression! It's value is: 16
+45 + 9 * 2
+Valid expression! It's value is: 63
+^C

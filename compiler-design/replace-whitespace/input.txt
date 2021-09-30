@@ -1,0 +1,11 @@
+Hello, this is a file with whitespaces.
+Single whitespace,  double whitespace,    
+	tabbed whitespace,
+You can   find        	everything here.
+
+H a v e	a	n i c e 	d a y!
+	
+If you run this 	through the lex.yy.c program,
+it will replace all whitespaces (spaces and tabs)
+with a single space.
+

@@ -1,0 +1,15 @@
+List of detected integers and floating point (FP) numbers in file 'numbers.txt':
+Integer  : 123
+FP number: 123.456
+FP number: 123.34E10
+Integer  : 189839
+FP number: 12.67E-10
+FP number: 123E10
+Integer  : 789667
+Integer  : 1000000
+FP number: 6.023E23
+FP number: 9.109E-31
+----------------------------------
+Total number of integers  : 4
+Total number of FP numbers: 6
+----------------------------------

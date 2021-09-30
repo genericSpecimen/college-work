@@ -1,0 +1,59 @@
+File Handling Procedures
+What do you want to do?
+1. Create a new file (overwrite if it exists).
+2. Open a file (open in append mode).
+3. Read from the opened file.
+4. Write to the opened file.
+5. Perform lseek operation on the opened file.
+6. Close the opened file.
+7. Exit.
+
+=> Enter an option (1-7): 2
+Enter file name to be opened (or to be created if it doesn't exist): hello.txt
+=> Successfully opened / created file: 'hello.txt', and opened file descriptor 3 (read/write)
+
+=> Enter an option (1-7): 4
+Enter data to write to file: new content
+Writing data to file...
+=> Successfully wrote to file.
+
+=> Enter an option (1-7): 4
+Enter data to write to file: Hello, how are you doing?
+Writing data to file...
+=> Successfully wrote to file.
+
+=> Enter an option (1-7): 3
+Do you want to perform random access? (1/0): 1
+SEEK_SET: 0, SEEK_CUR: 1, SEEK_END: 2
+Enter position from where to start (whence): 0
+Enter byte offset: 0
+=> Successfully performed lseek, currpos = 0
+Reading from currpos = 0
+Read the following first 255 bytes from specified file offset:
+
+existing content 
+new content
+Hello, how are you doing?
+
+
+=> Enter an option (1-7): 5
+SEEK_SET: 0, SEEK_CUR: 1, SEEK_END: 2
+Enter position from where to start (whence): 0
+Enter byte offset: 5
+=> Successfully performed lseek, currpos = 5
+
+=> Enter an option (1-7): 3
+Do you want to perform random access? (1/0): 0
+Reading from currpos = 5
+Read the following first 255 bytes from specified file offset:
+
+ing content 
+new content
+Hello, how are you doing?
+
+
+=> Enter an option (1-7): 6
+=> Successfully closed the open file.
+
+=> Enter an option (1-7): 7
+Exiting...

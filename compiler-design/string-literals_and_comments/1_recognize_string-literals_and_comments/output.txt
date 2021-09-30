@@ -1,0 +1,36 @@
+Multi-line comment matched:
+/*
+ * The isPalindrome() function takes a string as an input,
+ * and returns true if the string is a palindrome.
+ * Otherwise, it returns false
+ */
+
+Multi-line comment matched:
+/* reverse the string and compare */
+
+Single Line comment matched: // a vector of strings to be tested
+
+String Literal matched: "racecar"
+
+String Literal matched: "hello"
+
+String Literal matched: "02022020"
+
+String Literal matched: "generic string"
+
+Single Line comment matched: // iterate through all strings and test if it is a palindrome
+
+String Literal matched: "\""
+
+String Literal matched: "\""
+
+String Literal matched: " is a palindrome: "
+
+String Literal matched: "\n"
+
+Multi-line comment matched:
+/* xyz */
+
+Multi-line comment matched:
+/* abcd */
+

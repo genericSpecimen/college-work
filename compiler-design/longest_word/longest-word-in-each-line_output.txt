@@ -1,0 +1,7 @@
+Longest Words in each line of File: sample_text.txt
+
+Line 1 : 'pellentesque' (12 characters).
+Line 2 : 'Suspendisse' (11 characters).
+Line 3 : 'Doneceleifendquisdiam' (21 characters).
+Line 4 : 'pellentesqueante' (16 characters).
+Line 5 : 'facilisisjusto' (14 characters).

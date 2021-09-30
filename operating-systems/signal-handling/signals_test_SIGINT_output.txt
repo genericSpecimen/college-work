@@ -1,0 +1,2 @@
+^C
+Caught SIGINT : program interrupted, most likely by Ctrl-C: signal_handler function invoked

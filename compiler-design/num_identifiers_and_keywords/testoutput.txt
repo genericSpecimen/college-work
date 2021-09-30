@@ -1,0 +1,51 @@
+List of detected identifiers and keywords in file 'test.cpp':
+KEYWORD: bool
+IDENTIFIER: isPalindrome
+KEYWORD: const
+IDENTIFIER: std
+IDENTIFIER: string
+IDENTIFIER: str
+IDENTIFIER: std
+IDENTIFIER: string
+IDENTIFIER: copy
+IDENTIFIER: str
+IDENTIFIER: std
+IDENTIFIER: reverse
+IDENTIFIER: copy
+IDENTIFIER: begin
+IDENTIFIER: copy
+IDENTIFIER: end
+KEYWORD: if
+IDENTIFIER: copy
+IDENTIFIER: compare
+IDENTIFIER: str
+KEYWORD: return
+KEYWORD: false
+KEYWORD: return
+KEYWORD: true
+KEYWORD: int
+IDENTIFIER: main
+IDENTIFIER: std
+IDENTIFIER: vector
+IDENTIFIER: std
+IDENTIFIER: string
+IDENTIFIER: strs
+KEYWORD: for
+IDENTIFIER: std
+IDENTIFIER: string
+IDENTIFIER: s
+IDENTIFIER: strs
+IDENTIFIER: std
+IDENTIFIER: cout
+IDENTIFIER: s
+IDENTIFIER: std
+IDENTIFIER: cout
+IDENTIFIER: std
+IDENTIFIER: boolalpha
+IDENTIFIER: isPalindrome
+IDENTIFIER: s
+KEYWORD: return
+----------------------------------
+Total number of keywords    : 10
+Total number of identifiers : 36
+----------------------------------

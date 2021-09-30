@@ -1,0 +1,3 @@
+Process PID:77031
+
+Caught SIGTERM : program interrupted, most likely due to a kill command. signal_handler function invoked.

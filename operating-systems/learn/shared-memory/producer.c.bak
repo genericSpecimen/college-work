@@ -1,0 +1,156 @@
+#include <stdio.h>
+
+//#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+
+//#include <errno.h> // errno
+
+#include <unistd.h> // getpid()
+#include <stdlib.h> // exit()
+#include <string.h>
+
+#define SEMKEY 75
+
+#define BUFFER_SIZE 10
+// semaphore numbers
+#define SEM_MUTEX 0
+#define SEM_EMPTY 1
+#define SEM_FULL 2
+
+union semun {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+    struct seminfo *__buf;
+};
+
+int open_sem(int semkey, int num_sems) {
+    int semid = semget(semkey, num_sems, IPC_CREAT|0660);
+    if (semid == -1) {
+        perror("Error creating / getting a semaphore set");
+        exit(1);
+    } else {
+        printf("=> Successfully created / got a semaphore set with id: %d\n", semid);
+    }
+    
+    return semid;
+}
+
+void init_sem(int semid, int semnum, int value) {
+    union semun semopts;
+    semopts.val = value;
+    if (semctl(semid, semnum, SETVAL, semopts) == -1) {
+        perror("Error setting semaphore value");
+        exit(1);
+    } else {
+        printf("=> Successfully set semnum %d with value: %d\n", semnum, semopts.val);
+    }
+}
+
+int get_sem_val(int semid, int semnum) {
+    int semnum_val = semctl(semid, semnum, GETVAL, 0);
+    if (semnum_val == -1) {
+        perror("Error getting semaphore value");
+        exit(1);
+    } else {
+        //printf("=> Value of semnum %d = %d\n", semnum, semnum_val);
+    }
+    return semnum_val;
+}
+
+void print_sem_vals(int semid, int num_sems) {
+    for (int semnum=0; semnum<num_sems; semnum++) {
+        int semnum_val = get_sem_val(semid, semnum);
+        printf("=> Value of semnum %d = %d\n", semnum, semnum_val);
+    }  
+}
+
+void sem_wait(int semid, int semnum) {
+    struct sembuf sem_semnum_wait = {semnum, -1, 0};
+    if (semop(semid, &sem_semnum_wait, 1) == -1) {
+        perror("Error performing sem_semnum_wait using semop");
+        fprintf(stderr, "Error on semnum = %d\n", semnum);
+        exit(1);
+    } else {
+        printf("=> Successfully performed sem_semnum_wait, semnum = %d.\n", semnum);
+    }    
+}
+
+void sem_signal(int semid, int semnum) {
+    struct sembuf sem_semnum_signal = { semnum, 1, 0 };
+    if (semop(semid, &sem_semnum_signal, 1) == -1) {
+        perror("Error performing sem_semnum_signal using semop");
+        fprintf(stderr, "Error on semnum = %d\n", semnum);
+        exit(1);
+    } else {
+        printf("=> Successfully performed sem_semnum_signal, semnum = %d.\n", semnum);
+    }  
+}
+
+int main() {
+    int num_sems = 3;
+    int semid = open_sem(SEMKEY, num_sems);
+    
+    init_sem(semid, SEM_MUTEX, 1);
+    
+    init_sem(semid, SEM_EMPTY, BUFFER_SIZE);
+    
+    init_sem(semid, SEM_FULL, 0);
+    
+    print_sem_vals(semid, num_sems);
+    
+    // wait(empty)
+    sem_wait(semid, SEM_EMPTY);
+    
+//     struct sembuf sem_empty_wait = {SEM_EMPTY, -1, 0};
+//     if (semop(semid, &sem_empty_wait, 1) == -1) {
+//         perror("Error performing sem_empty_wait using semop");
+//         exit(1);
+//     } else {
+//         printf("=> Successfully performed sem_empty_wait.\n");
+//     }
+    
+    print_sem_vals(semid, num_sems);
+    
+    // wait(mutex)
+    sem_wait(semid, SEM_MUTEX);
+//     struct sembuf mutex_lock = {SEM_MUTEX, -1, 0};
+//     if (semop(semid, &mutex_lock, 1) == -1) {
+//         perror("Error obtaining mutex lock using semop");
+//         exit(1);
+//     } else {
+//         printf("=> Successfully obtained mutex lock.\n");
+//     }
+
+    print_sem_vals(semid, num_sems);
+    
+    printf("Adding next_produced to buffer....\n");
+    
+    // signal(mutex)
+    sem_signal(semid, SEM_MUTEX);
+    
+//     struct sembuf mutex_unlock = { SEM_MUTEX, 1, 0 };
+//     if (semop(semid, &mutex_unlock, 1) == -1) {
+//         perror("Error releasing mutex lock using semop");
+//         exit(1);
+//     } else {
+//         printf("=> Successfully released mutex lock.\n");
+//     }
+    
+    print_sem_vals(semid, num_sems);
+    
+    // signal(full)
+    sem_signal(semid, SEM_FULL);
+//     struct sembuf sem_full_signal = { SEM_FULL, 1, 0 };
+//     if (semop(semid, &sem_full_signal, 1) == -1) {
+//         perror("Error performing sem_full_signal using semop");
+//         exit(1);
+//     } else {
+//         printf("=> Successfully performed sem_full_signal.\n");
+//     }
+    
+    print_sem_vals(semid, num_sems);
+    
+    return 0;
+}

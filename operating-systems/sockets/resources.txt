@@ -1,0 +1,78 @@
+Unix Domain socket
+
+Network socket
+the term network socket is most commonly used in the context of the Internet Protocol Suite, and is therefore often also referred to as Internet socket. In this context, a socket is externally identified to other hosts by its socket address, which is the triad of transport protocol, IP address, and port number.
+
+
+connection-oriented (TCP) sockets
+connectionless (UDP) sockets
+UDP is a very simple protocol. Messages, so called datagrams, are sent to other hosts on an IP network without the need to set up special transmission channels or data paths beforehand. The UDP socket only needs to be opened for communication. It listens for incoming messages and sends outgoing messages on request.
+
+
+AF_INET is an address family that is used to designate the type of addresses that your socket can communicate with (in this case, Internet Protocol v4 addresses). When you create a socket, you have to specify its address family, and then you can only use addresses of that type with the socket. The Linux kernel, for example, supports 29 other address families such as UNIX (AF_UNIX) sockets and IPX (AF_IPX), and also communications with IRDA and Bluetooth (AF_IRDA and AF_BLUETOOTH, but it is doubtful you'll use these at such a low level).
+
+For the most part, sticking with AF_INET for socket programming over a network is the safest option. There is also AF_INET6 for Internet Protocol v6 addresses.
+
+References:
+https://beej.us/guide/bgnet/
+https://beej.us/guide/bgipc/html/multi/unixsock.html
+https://docs.docker.com/engine/reference/commandline/dockerd/#examples
+https://askubuntu.com/questions/916241/what-are-u-str-recv-q-and-send-q-in-ss-output
+https://www.cs.columbia.edu/~jae/4118/L09-domain-sockets.html
+https://twitter.com/b0rk/status/980955984402272257/photo/1
+https://en.wikipedia.org/wiki/Unix_domain_socket
+https://en.wikipedia.org/wiki/Berkeley_sockets
+https://en.wikipedia.org/wiki/Network_socket
+https://en.wikipedia.org/wiki/Berkeley_sockets#Protocol_and_address_families
+https://en.wikipedia.org/wiki/Loopback#Virtual_loopback_interface
+
+https://stackoverflow.com/questions/1838358/is-there-any-legitimate-reason-for-using-unix-sockets-over-tcp-ip-with-mysql
+
+https://serverfault.com/questions/124517/what-is-the-difference-between-unix-sockets-and-tcp-ip-sockets 
+In some cases, you can use TCP/IP sockets to talk with processes running on the same computer (by using the loopback interface).
+
+
+https://dev.mysql.com/doc/refman/8.0/en/can-not-connect-to-server.html
+mysqld, also known as MySQL Server, is a single multithreaded program that does most of the work in a MySQL installation. It does not spawn additional processes. MySQL Server manages access to the MySQL data directory that contains databases and tables. The data directory is also the default location for other information such as log files and status files. 
+
+When MySQL server starts, it listens for network connections from client programs and manages access to databases on behalf of those clients. 
+
+A MySQL client on Unix can connect to the mysqld server in two different ways: By using a Unix socket file to connect through a file in the file system (default /tmp/mysql.sock), or by using TCP/IP, which connects through a port number. A Unix socket file connection is faster than TCP/IP, but can be used only when connecting to a server on the same computer. A Unix socket file is used if you do not specify a host name or if you specify the special host name localhost. 
+
+The default location for the Unix socket file that the server uses for communication with local clients is /tmp/mysql.sock. (For some distribution formats, the directory might be different, such as /var/lib/mysql for RPMs.) 
+
+The releases of the MySQL database differentiate between the use of the hostname localhost and the use of the addresses 127.0.0.1 and ::1.[7] When using localhost as the destination in a client connector interface of an application, the MySQL application programming interface connects to the database using a Unix domain socket, while a TCP connection via the loopback interface requires the direct use of the explicit address. 
+
+
+
+https://stackoverflow.com/questions/35110146/can-anyone-explain-docker-sock
+Docker
+package applications into containers — standardized executable components combining application source code with the operating system (OS) libraries and dependencies required to run that code in any environment
+
+docker.sock is the UNIX socket that Docker daemon is listening to. It's the main entry point for Docker API. It also can be TCP socket but by default for security reasons Docker defaults to use UNIX socket.
+
+Docker cli client uses this socket to execute docker commands by default. You can override these settings as well.
+
+
+https://medium.com/swlh/getting-started-with-unix-domain-sockets-4472c0db4eb1
+
+https://realpython.com/python-sockets/
+
+https://www.slideshare.net/adorepump/application-layer-and-socket-programming-presentation
+
+Abraham:
+3.8.1 sockets
+C.9.1 sockets
+
+Maurice:
+11.4 sockets
+
+Netid    State Recv-Q Send-Q       Local Address:Port              Peer Address:Port   Process
+u_str    ESTAB         0 0  /tmp/dbus-pi02BEUFfV 26176                        * 25313
+u_str    ESTAB         0 0                     * 24430                        * 26180
+icmp6    UNCONN        0 0                     *:ipv6-icmp                    *:*
+udp      ESTAB         0 0   192.168.1.11%wlp3s0:bootpc             192.168.1.1:bootps
+tcp      ESTAB         0 0             127.0.0.1:47576                127.0.0.1:58833
+tcp      ESTAB         0 0             127.0.0.1:44354                127.0.0.1:42901
+tcp      ESTAB         0 0             127.0.0.1:36500                127.0.0.1:54823
+tcp      FIN-WAIT-1    0 1          192.168.1.11:46444            34.120.186.93:https

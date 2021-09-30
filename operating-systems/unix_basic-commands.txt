@@ -1,0 +1,50 @@
+1.
+# all login names and number of users logged on
+who --count
+
+# count of unique users
+# "cut" the first column of the output, sort it,
+# get unique users, and finally, count the number of lines
+who | cut -d' ' -f 1 | sort | uniq | wc -l
+_________________________________________________________
+2.
+# for testing purpose, create 10 directories and 20 files using "brace expansion"
+mkdir testdir{1..10}
+touch testfile{1..20}.txt
+
+# output of ls
+ls -l > ls_out.txt
+# number of directories (line starts with d instead of -)
+grep '^d' ls_out.txt | wc -l
+# number of files (line starts with -)
+grep '^-' ls_out.txt | wc -l
+_________________________________________________________
+3.
+touch poem{10..20}.txt
+# using two commands
+ls -l && ls -l | grep -c poem > file_count.txt
+
+# tee: read from stdin, write to stdout and files
+
+# this just pipes stdout of tee to grep and we see nothing on stdout. 
+# ls -l | tee | grep -c poem > file_count.txt
+
+# we need to use process substitution, which uses /dev/fd/<n> files to 
+ls -l | tee >(grep -c poem > file_count.txt)
+_________________________________________________________
+4 and 5.
+cat file1.txt file2.txt | tee -a file3.txt
+
+_________________________________________________________
+6.
+a.
+# sort _only_ on the second column (city)
+sort -t ',' -k2,2 city.txt > sortCity.txt 
+
+b.
+# append the contents of city_temp.txt
+cat city_temp.txt >> city.txt
+
+c.
+# append user input
+cat >> city.txt
